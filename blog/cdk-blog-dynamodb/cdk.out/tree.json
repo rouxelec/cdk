@@ -1,0 +1,91 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree"
+      },
+      "cdk-blog-dynamodb": {
+        "id": "cdk-blog-dynamodb",
+        "path": "cdk-blog-dynamodb",
+        "children": {
+          "cidr_range_table": {
+            "id": "cidr_range_table",
+            "path": "cdk-blog-dynamodb/cidr_range_table",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-blog-dynamodb/cidr_range_table/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::DynamoDB::Table",
+                  "aws:cdk:cloudformation:props": {
+                    "keySchema": [
+                      {
+                        "attributeName": "id",
+                        "keyType": "HASH"
+                      }
+                    ],
+                    "attributeDefinitions": [
+                      {
+                        "attributeName": "id",
+                        "attributeType": "S"
+                      }
+                    ],
+                    "provisionedThroughput": {
+                      "readCapacityUnits": 5,
+                      "writeCapacityUnits": 5
+                    },
+                    "tableName": "cidr_range_table"
+                  }
+                }
+              },
+              "ScalingRole": {
+                "id": "ScalingRole",
+                "path": "cdk-blog-dynamodb/cidr_range_table/ScalingRole"
+              }
+            }
+          },
+          "last_cidr_range_table": {
+            "id": "last_cidr_range_table",
+            "path": "cdk-blog-dynamodb/last_cidr_range_table",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-blog-dynamodb/last_cidr_range_table/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::DynamoDB::Table",
+                  "aws:cdk:cloudformation:props": {
+                    "keySchema": [
+                      {
+                        "attributeName": "id",
+                        "keyType": "HASH"
+                      }
+                    ],
+                    "attributeDefinitions": [
+                      {
+                        "attributeName": "id",
+                        "attributeType": "S"
+                      }
+                    ],
+                    "provisionedThroughput": {
+                      "readCapacityUnits": 5,
+                      "writeCapacityUnits": 5
+                    },
+                    "tableName": "last_cidr_range_table"
+                  }
+                }
+              },
+              "ScalingRole": {
+                "id": "ScalingRole",
+                "path": "cdk-blog-dynamodb/last_cidr_range_table/ScalingRole"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

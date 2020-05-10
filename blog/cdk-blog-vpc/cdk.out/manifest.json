@@ -1,0 +1,572 @@
+{
+  "version": "1.33.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "cdk-blog-vpc": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/ca-central-1",
+      "properties": {
+        "templateFile": "cdk-blog-vpc.template.json"
+      },
+      "metadata": {
+        "/cdk-blog-vpc/tee/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "tee88486AA7",
+            "trace": [
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:306:25)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IngressSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIngressSubnet1Subnet7E075A2D",
+            "trace": [
+              "new Subnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:596:24)",
+              "new PublicSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:753:9)",
+              "availabilityZones.forEach (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:525:42)",
+              "Array.forEach (<anonymous>)",
+              "Vpc.createSubnetResources (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:509:32)",
+              "Vpc.createSubnets (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:500:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:326:14)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IngressSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIngressSubnet1RouteTable1F86DCFA",
+            "trace": [
+              "new Subnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:611:23)",
+              "new PublicSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:753:9)",
+              "availabilityZones.forEach (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:525:42)",
+              "Array.forEach (<anonymous>)",
+              "Vpc.createSubnetResources (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:509:32)",
+              "Vpc.createSubnets (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:500:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:326:14)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IngressSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIngressSubnet1RouteTableAssociationD82FB3EA",
+            "trace": [
+              "new Subnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:616:9)",
+              "new PublicSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:753:9)",
+              "availabilityZones.forEach (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:525:42)",
+              "Array.forEach (<anonymous>)",
+              "Vpc.createSubnetResources (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:509:32)",
+              "Vpc.createSubnets (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:500:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:326:14)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IngressSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIngressSubnet1DefaultRoute1210A345",
+            "trace": [
+              "PublicSubnet.addDefaultInternetRoute (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:643:23)",
+              "Vpc.publicSubnets.forEach.publicSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:337:30)",
+              "Array.forEach (<anonymous>)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:336:32)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IngressSubnet1/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIngressSubnet1EIPFC9C073C",
+            "trace": [
+              "PublicSubnet.addNatGateway (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:764:27)",
+              "NatGateway.configureNat (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/nat.js:52:33)",
+              "Vpc.createNatGateways (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:483:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:342:22)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IngressSubnet1/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIngressSubnet1NATGatewayD32E3F00",
+            "trace": [
+              "PublicSubnet.addNatGateway (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:762:21)",
+              "NatGateway.configureNat (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/nat.js:52:33)",
+              "Vpc.createNatGateways (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:483:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:342:22)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IngressSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIngressSubnet2SubnetC6C203FC",
+            "trace": [
+              "new Subnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:596:24)",
+              "new PublicSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:753:9)",
+              "availabilityZones.forEach (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:525:42)",
+              "Array.forEach (<anonymous>)",
+              "Vpc.createSubnetResources (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:509:32)",
+              "Vpc.createSubnets (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:500:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:326:14)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IngressSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIngressSubnet2RouteTable118AAA7F",
+            "trace": [
+              "new Subnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:611:23)",
+              "new PublicSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:753:9)",
+              "availabilityZones.forEach (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:525:42)",
+              "Array.forEach (<anonymous>)",
+              "Vpc.createSubnetResources (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:509:32)",
+              "Vpc.createSubnets (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:500:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:326:14)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IngressSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIngressSubnet2RouteTableAssociation6D4A23F7",
+            "trace": [
+              "new Subnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:616:9)",
+              "new PublicSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:753:9)",
+              "availabilityZones.forEach (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:525:42)",
+              "Array.forEach (<anonymous>)",
+              "Vpc.createSubnetResources (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:509:32)",
+              "Vpc.createSubnets (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:500:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:326:14)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IngressSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIngressSubnet2DefaultRouteF9280DFE",
+            "trace": [
+              "PublicSubnet.addDefaultInternetRoute (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:643:23)",
+              "Vpc.publicSubnets.forEach.publicSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:337:30)",
+              "Array.forEach (<anonymous>)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:336:32)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IngressSubnet2/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIngressSubnet2EIPA53FEE57",
+            "trace": [
+              "PublicSubnet.addNatGateway (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:764:27)",
+              "NatGateway.configureNat (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/nat.js:52:33)",
+              "Vpc.createNatGateways (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:483:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:342:22)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IngressSubnet2/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIngressSubnet2NATGatewayAABB45A0",
+            "trace": [
+              "PublicSubnet.addNatGateway (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:762:21)",
+              "NatGateway.configureNat (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/nat.js:52:33)",
+              "Vpc.createNatGateways (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:483:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:342:22)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/ApplicationSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeApplicationSubnet1Subnet3E4B94ED",
+            "trace": [
+              "new Subnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:596:24)",
+              "new PrivateSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:780:9)",
+              "availabilityZones.forEach (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:530:43)",
+              "Array.forEach (<anonymous>)",
+              "Vpc.createSubnetResources (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:509:32)",
+              "Vpc.createSubnets (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:500:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:326:14)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/ApplicationSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeApplicationSubnet1RouteTable31AC69AD",
+            "trace": [
+              "new Subnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:611:23)",
+              "new PrivateSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:780:9)",
+              "availabilityZones.forEach (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:530:43)",
+              "Array.forEach (<anonymous>)",
+              "Vpc.createSubnetResources (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:509:32)",
+              "Vpc.createSubnets (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:500:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:326:14)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/ApplicationSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeApplicationSubnet1RouteTableAssociation9E98D2F2",
+            "trace": [
+              "new Subnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:616:9)",
+              "new PrivateSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:780:9)",
+              "availabilityZones.forEach (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:530:43)",
+              "Array.forEach (<anonymous>)",
+              "Vpc.createSubnetResources (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:509:32)",
+              "Vpc.createSubnets (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:500:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:326:14)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/ApplicationSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeApplicationSubnet1DefaultRoute7BCD0F5E",
+            "trace": [
+              "PrivateSubnet.addRoute (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:684:23)",
+              "NatGateway.configureSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/nat.js:63:16)",
+              "NatGateway.configureNat (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/nat.js:57:18)",
+              "Vpc.createNatGateways (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:483:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:342:22)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/ApplicationSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeApplicationSubnet2Subnet8E015C0B",
+            "trace": [
+              "new Subnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:596:24)",
+              "new PrivateSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:780:9)",
+              "availabilityZones.forEach (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:530:43)",
+              "Array.forEach (<anonymous>)",
+              "Vpc.createSubnetResources (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:509:32)",
+              "Vpc.createSubnets (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:500:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:326:14)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/ApplicationSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeApplicationSubnet2RouteTableAFEAFFE4",
+            "trace": [
+              "new Subnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:611:23)",
+              "new PrivateSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:780:9)",
+              "availabilityZones.forEach (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:530:43)",
+              "Array.forEach (<anonymous>)",
+              "Vpc.createSubnetResources (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:509:32)",
+              "Vpc.createSubnets (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:500:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:326:14)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/ApplicationSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeApplicationSubnet2RouteTableAssociation181FEE36",
+            "trace": [
+              "new Subnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:616:9)",
+              "new PrivateSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:780:9)",
+              "availabilityZones.forEach (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:530:43)",
+              "Array.forEach (<anonymous>)",
+              "Vpc.createSubnetResources (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:509:32)",
+              "Vpc.createSubnets (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:500:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:326:14)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/ApplicationSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeApplicationSubnet2DefaultRouteC4FB1253",
+            "trace": [
+              "PrivateSubnet.addRoute (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:684:23)",
+              "NatGateway.configureSubnet (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/nat.js:63:16)",
+              "NatGateway.configureNat (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/nat.js:57:18)",
+              "Vpc.createNatGateways (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:483:18)",
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:342:22)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeIGW507DB202",
+            "trace": [
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:330:25)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ],
+        "/cdk-blog-vpc/tee/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "teeVPCGW75FC6DED",
+            "trace": [
+              "new Vpc (/tmp/jsii-kernel-zOMRBa/node_modules/@aws-cdk/aws-ec2/lib/vpc.js:332:25)",
+              "obj._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:49)",
+              "Kernel._wrapSandboxCode (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:8313:20)",
+              "Kernel._create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7853:26)",
+              "Kernel.create (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7600:21)",
+              "KernelHost.processRequest (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7388:28)",
+              "KernelHost.run (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7328:14)",
+              "Immediate.setImmediate [as _onImmediate] (/home/ec2-user/.local/lib/python3.6/site-packages/jsii/_embedded/jsii/jsii-runtime.js:7331:37)",
+              "runCallback (timers.js:705:18)",
+              "tryOnImmediate (timers.js:676:5)",
+              "processImmediate (timers.js:658:5)"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "runtime": {
+    "libraries": {
+      "@aws-cdk/cloud-assembly-schema": "1.36.1",
+      "@aws-cdk/cx-api": "1.36.1",
+      "@aws-cdk/core": "1.36.1",
+      "@aws-cdk/region-info": "1.36.1",
+      "@aws-cdk/aws-iam": "1.36.1",
+      "@aws-cdk/aws-cloudwatch": "1.36.1",
+      "@aws-cdk/aws-logs": "1.36.1",
+      "@aws-cdk/aws-events": "1.36.1",
+      "@aws-cdk/aws-kms": "1.36.1",
+      "@aws-cdk/aws-s3": "1.36.1",
+      "@aws-cdk/aws-ssm": "1.36.1",
+      "@aws-cdk/aws-ec2": "1.36.1",
+      "jsii-runtime": "Python/3.6.10"
+    }
+  }
+}

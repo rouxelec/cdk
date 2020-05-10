@@ -1,0 +1,456 @@
+{
+  "Resources": {
+    "tee88486AA7": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.0.1.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/Resource"
+      }
+    },
+    "teeIngressSubnet1Subnet7E075A2D": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.1.0.0/24",
+        "VpcId": {
+          "Ref": "tee88486AA7"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee/IngressSubnet1"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Ingress"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IngressSubnet1/Subnet"
+      }
+    },
+    "teeIngressSubnet1RouteTable1F86DCFA": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "tee88486AA7"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee/IngressSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IngressSubnet1/RouteTable"
+      }
+    },
+    "teeIngressSubnet1RouteTableAssociationD82FB3EA": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "teeIngressSubnet1RouteTable1F86DCFA"
+        },
+        "SubnetId": {
+          "Ref": "teeIngressSubnet1Subnet7E075A2D"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IngressSubnet1/RouteTableAssociation"
+      }
+    },
+    "teeIngressSubnet1DefaultRoute1210A345": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "teeIngressSubnet1RouteTable1F86DCFA"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "teeIGW507DB202"
+        }
+      },
+      "DependsOn": [
+        "teeVPCGW75FC6DED"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IngressSubnet1/DefaultRoute"
+      }
+    },
+    "teeIngressSubnet1EIPFC9C073C": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee/IngressSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IngressSubnet1/EIP"
+      }
+    },
+    "teeIngressSubnet1NATGatewayD32E3F00": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "teeIngressSubnet1EIPFC9C073C",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "teeIngressSubnet1Subnet7E075A2D"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee/IngressSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IngressSubnet1/NATGateway"
+      }
+    },
+    "teeIngressSubnet2SubnetC6C203FC": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.1.1.0/24",
+        "VpcId": {
+          "Ref": "tee88486AA7"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            1,
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee/IngressSubnet2"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Ingress"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IngressSubnet2/Subnet"
+      }
+    },
+    "teeIngressSubnet2RouteTable118AAA7F": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "tee88486AA7"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee/IngressSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IngressSubnet2/RouteTable"
+      }
+    },
+    "teeIngressSubnet2RouteTableAssociation6D4A23F7": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "teeIngressSubnet2RouteTable118AAA7F"
+        },
+        "SubnetId": {
+          "Ref": "teeIngressSubnet2SubnetC6C203FC"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IngressSubnet2/RouteTableAssociation"
+      }
+    },
+    "teeIngressSubnet2DefaultRouteF9280DFE": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "teeIngressSubnet2RouteTable118AAA7F"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "teeIGW507DB202"
+        }
+      },
+      "DependsOn": [
+        "teeVPCGW75FC6DED"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IngressSubnet2/DefaultRoute"
+      }
+    },
+    "teeIngressSubnet2EIPA53FEE57": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee/IngressSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IngressSubnet2/EIP"
+      }
+    },
+    "teeIngressSubnet2NATGatewayAABB45A0": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "teeIngressSubnet2EIPA53FEE57",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "teeIngressSubnet2SubnetC6C203FC"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee/IngressSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IngressSubnet2/NATGateway"
+      }
+    },
+    "teeApplicationSubnet1Subnet3E4B94ED": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.1.2.0/24",
+        "VpcId": {
+          "Ref": "tee88486AA7"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            0,
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee/ApplicationSubnet1"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Application"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/ApplicationSubnet1/Subnet"
+      }
+    },
+    "teeApplicationSubnet1RouteTable31AC69AD": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "tee88486AA7"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee/ApplicationSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/ApplicationSubnet1/RouteTable"
+      }
+    },
+    "teeApplicationSubnet1RouteTableAssociation9E98D2F2": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "teeApplicationSubnet1RouteTable31AC69AD"
+        },
+        "SubnetId": {
+          "Ref": "teeApplicationSubnet1Subnet3E4B94ED"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/ApplicationSubnet1/RouteTableAssociation"
+      }
+    },
+    "teeApplicationSubnet1DefaultRoute7BCD0F5E": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "teeApplicationSubnet1RouteTable31AC69AD"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "teeIngressSubnet1NATGatewayD32E3F00"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/ApplicationSubnet1/DefaultRoute"
+      }
+    },
+    "teeApplicationSubnet2Subnet8E015C0B": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.1.3.0/24",
+        "VpcId": {
+          "Ref": "tee88486AA7"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            1,
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        },
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee/ApplicationSubnet2"
+          },
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Application"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/ApplicationSubnet2/Subnet"
+      }
+    },
+    "teeApplicationSubnet2RouteTableAFEAFFE4": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "tee88486AA7"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee/ApplicationSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/ApplicationSubnet2/RouteTable"
+      }
+    },
+    "teeApplicationSubnet2RouteTableAssociation181FEE36": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "teeApplicationSubnet2RouteTableAFEAFFE4"
+        },
+        "SubnetId": {
+          "Ref": "teeApplicationSubnet2Subnet8E015C0B"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/ApplicationSubnet2/RouteTableAssociation"
+      }
+    },
+    "teeApplicationSubnet2DefaultRouteC4FB1253": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "teeApplicationSubnet2RouteTableAFEAFFE4"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "teeIngressSubnet2NATGatewayAABB45A0"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/ApplicationSubnet2/DefaultRoute"
+      }
+    },
+    "teeIGW507DB202": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "cdk-blog-vpc/tee"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/IGW"
+      }
+    },
+    "teeVPCGW75FC6DED": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": {
+          "Ref": "tee88486AA7"
+        },
+        "InternetGatewayId": {
+          "Ref": "teeIGW507DB202"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc/tee/VPCGW"
+      }
+    }
+  }
+}
