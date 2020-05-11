@@ -3,6 +3,7 @@ import aws_cdk.aws_ec2 as ec2
 from botocore.exceptions import ClientError
 import boto3
 import json
+import ipaddress
 
 default_vpc_cidr_range="10.0.0.0/16"
 
@@ -33,10 +34,13 @@ class CdkBlogVpcStack(core.Stack):
             last_cidr_range=response['Item']['value']
             next_cidr_range=increment_cidr_range(last_cidr_range);
 
+        print('NEXT CIDR:')
+        print(next_cidr_range)
         #Provisioning VPC
         vpc = ec2.Vpc(self, vpc_name,
             cidr=next_cidr_range,
             max_azs=3,
+
             subnet_configuration=[ec2.SubnetConfiguration(
                 subnet_type=ec2.SubnetType.PUBLIC,
                 name="Ingress",
@@ -57,13 +61,21 @@ class CdkBlogVpcStack(core.Stack):
         cidr_range_table = dynamodb.Table('cidr_range_table')
         response_cidr_range_table = cidr_range_table.put_item(
            Item={
-                'id': next_cidr_range,
-                'vpc': vpc_name
+                'id': vpc_name,
+                'vpc': next_cidr_range
+            }
+        )
+        
+        response_last_cidr_range_table = last_cidr_range_table.put_item(
+           Item={
+                'id': 'last_cidr_range',
+                'value': next_cidr_range
             }
         )
         
         
 def increment_cidr_range(current_cidr_range):
-    tab_cidr=current_cidr_range.split('.')
-    return tab_cidr[0]+'.'+tab_cidr[1]+'.'+str(int(tab_cidr[2])+1)+'.'+tab_cidr[3]
+    startIp=current_cidr_range.split("/")[0]
+    newip = ipaddress.IPv4Address(startIp)+65536
+    return str(newip)+"/16"
         

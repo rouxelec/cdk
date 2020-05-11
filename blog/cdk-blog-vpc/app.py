@@ -9,6 +9,7 @@ env_CA = core.Environment(region="ca-central-1")
 print('Calling')
 app = core.App()
 print(app)
-CdkBlogVpcStack(app, "cdk-blog-vpc", vpc_name="tee", env=env_CA)
+CdkBlogVpcStack(app, "cdk-blog-vpc1", vpc_name="vpc-dev1", env=env_CA)
+CdkBlogVpcStack(app, "cdk-blog-vpc2", vpc_name="vpc-dev2", env=env_CA)
 
 app.synth()
