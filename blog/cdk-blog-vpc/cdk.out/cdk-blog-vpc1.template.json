@@ -3,7 +3,7 @@
     "vpcdev122B8E28D": {
       "Type": "AWS::EC2::VPC",
       "Properties": {
-        "CidrBlock": "10.55.0.0/16",
+        "CidrBlock": "10.101.0.0/16",
         "EnableDnsHostnames": true,
         "EnableDnsSupport": true,
         "InstanceTenancy": "default",
@@ -21,7 +21,7 @@
     "vpcdev1IngressSubnet1SubnetFC0D9474": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "CidrBlock": "10.55.0.0/24",
+        "CidrBlock": "10.101.0.0/24",
         "VpcId": {
           "Ref": "vpcdev122B8E28D"
         },
@@ -143,7 +143,7 @@
     "vpcdev1IngressSubnet2SubnetF0D0F022": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "CidrBlock": "10.55.1.0/24",
+        "CidrBlock": "10.101.1.0/24",
         "VpcId": {
           "Ref": "vpcdev122B8E28D"
         },
@@ -265,7 +265,7 @@
     "vpcdev1ApplicationSubnet1Subnet968B711D": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "CidrBlock": "10.55.2.0/24",
+        "CidrBlock": "10.101.2.0/24",
         "VpcId": {
           "Ref": "vpcdev122B8E28D"
         },
@@ -346,7 +346,7 @@
     "vpcdev1ApplicationSubnet2SubnetF64D6EF3": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
-        "CidrBlock": "10.55.3.0/24",
+        "CidrBlock": "10.101.3.0/24",
         "VpcId": {
           "Ref": "vpcdev122B8E28D"
         },
@@ -450,6 +450,16 @@
       },
       "Metadata": {
         "aws:cdk:path": "cdk-blog-vpc1/vpc-dev1/VPCGW"
+      }
+    }
+  },
+  "Outputs": {
+    "ExportsOutputRefvpcdev122B8E28D3296F345": {
+      "Value": {
+        "Ref": "vpcdev122B8E28D"
+      },
+      "Export": {
+        "Name": "cdk-blog-vpc1:ExportsOutputRefvpcdev122B8E28D3296F345"
       }
     }
   }

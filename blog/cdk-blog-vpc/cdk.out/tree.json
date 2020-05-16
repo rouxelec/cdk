@@ -22,7 +22,7 @@
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::VPC",
                   "aws:cdk:cloudformation:props": {
-                    "cidrBlock": "10.55.0.0/16",
+                    "cidrBlock": "10.101.0.0/16",
                     "enableDnsHostnames": true,
                     "enableDnsSupport": true,
                     "instanceTenancy": "default",
@@ -45,7 +45,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.55.0.0/24",
+                        "cidrBlock": "10.101.0.0/24",
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
@@ -180,7 +180,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.55.1.0/24",
+                        "cidrBlock": "10.101.1.0/24",
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
@@ -315,7 +315,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.55.2.0/24",
+                        "cidrBlock": "10.101.2.0/24",
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
@@ -410,7 +410,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.55.3.0/24",
+                        "cidrBlock": "10.101.3.0/24",
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
@@ -526,6 +526,16 @@
                 }
               }
             }
+          },
+          "Exports": {
+            "id": "Exports",
+            "path": "cdk-blog-vpc1/Exports",
+            "children": {
+              "Output{\"Ref\":\"vpcdev122B8E28D\"}": {
+                "id": "Output{\"Ref\":\"vpcdev122B8E28D\"}",
+                "path": "cdk-blog-vpc1/Exports/Output{\"Ref\":\"vpcdev122B8E28D\"}"
+              }
+            }
           }
         }
       },
@@ -543,7 +553,7 @@
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::VPC",
                   "aws:cdk:cloudformation:props": {
-                    "cidrBlock": "10.56.0.0/16",
+                    "cidrBlock": "10.102.0.0/16",
                     "enableDnsHostnames": true,
                     "enableDnsSupport": true,
                     "instanceTenancy": "default",
@@ -566,7 +576,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.56.0.0/24",
+                        "cidrBlock": "10.102.0.0/24",
                         "vpcId": {
                           "Ref": "vpcdev2A6F85476"
                         },
@@ -701,7 +711,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.56.1.0/24",
+                        "cidrBlock": "10.102.1.0/24",
                         "vpcId": {
                           "Ref": "vpcdev2A6F85476"
                         },
@@ -836,7 +846,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.56.2.0/24",
+                        "cidrBlock": "10.102.2.0/24",
                         "vpcId": {
                           "Ref": "vpcdev2A6F85476"
                         },
@@ -931,7 +941,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.56.3.0/24",
+                        "cidrBlock": "10.102.3.0/24",
                         "vpcId": {
                           "Ref": "vpcdev2A6F85476"
                         },
@@ -1044,6 +1054,37 @@
                       "Ref": "vpcdev2IGW5BAB27B0"
                     }
                   }
+                }
+              }
+            }
+          },
+          "Exports": {
+            "id": "Exports",
+            "path": "cdk-blog-vpc2/Exports",
+            "children": {
+              "Output{\"Ref\":\"vpcdev2A6F85476\"}": {
+                "id": "Output{\"Ref\":\"vpcdev2A6F85476\"}",
+                "path": "cdk-blog-vpc2/Exports/Output{\"Ref\":\"vpcdev2A6F85476\"}"
+              }
+            }
+          }
+        }
+      },
+      "cdk-blog-vpc-peer": {
+        "id": "cdk-blog-vpc-peer",
+        "path": "cdk-blog-vpc-peer",
+        "children": {
+          "test": {
+            "id": "test",
+            "path": "cdk-blog-vpc-peer/test",
+            "attributes": {
+              "aws:cdk:cloudformation:type": "AWS::EC2::VPCPeeringConnection",
+              "aws:cdk:cloudformation:props": {
+                "peerVpcId": {
+                  "Fn::ImportValue": "cdk-blog-vpc2:ExportsOutputRefvpcdev2A6F854763501C19D"
+                },
+                "vpcId": {
+                  "Fn::ImportValue": "cdk-blog-vpc1:ExportsOutputRefvpcdev122B8E28D3296F345"
                 }
               }
             }
