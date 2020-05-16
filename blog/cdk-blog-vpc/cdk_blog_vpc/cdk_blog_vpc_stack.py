@@ -7,11 +7,19 @@ import ipaddress
 
 default_vpc_cidr_range="10.0.0.0/16"
 
+
+        
+
+class VPCPeeringConnection(ec2.CfnVPCPeeringConnection):
+    def __init__(self,scope, id,  vpc,peer_vpc,  **kwargs):
+        super().__init__(scope, id, **kwargs)
+        
+
 class CdkBlogVpcStack(core.Stack):
 
     def __init__(self, scope: core.Construct, id: str, vpc_name:str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
-
+            
         # The code that defines your stack goes here
         dynamodb = boto3.resource('dynamodb', region_name=kwargs['env'].region)
 
@@ -37,7 +45,7 @@ class CdkBlogVpcStack(core.Stack):
         print('NEXT CIDR:')
         print(next_cidr_range)
         #Provisioning VPC
-        vpc = ec2.Vpc(self, vpc_name,
+        self.vpc = ec2.Vpc(self, vpc_name,
             cidr=next_cidr_range,
             max_azs=3,
 
@@ -58,6 +66,8 @@ class CdkBlogVpcStack(core.Stack):
             ]
         )
         
+        
+        
         cidr_range_table = dynamodb.Table('cidr_range_table')
         response_cidr_range_table = cidr_range_table.put_item(
            Item={
@@ -72,6 +82,13 @@ class CdkBlogVpcStack(core.Stack):
                 'value': next_cidr_range
             }
         )
+        
+        
+class CdkBlogVpcPeeringStack(core.Stack):
+    def __init__(self, scope: core.Construct, id: str, vpc:ec2.Vpc,peer_vpc:ec2.Vpc, **kwargs) -> None:
+        super().__init__(scope, id, **kwargs)
+        print(vpc)
+        vpc_peer=VPCPeeringConnection(self,'test', vpc.vpc_id, peer_vpc.vpc_id)
         
         
 def increment_cidr_range(current_cidr_range):

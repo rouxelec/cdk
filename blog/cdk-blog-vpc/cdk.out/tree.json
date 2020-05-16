@@ -22,7 +22,7 @@
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::VPC",
                   "aws:cdk:cloudformation:props": {
-                    "cidrBlock": "10.12.0.0/16",
+                    "cidrBlock": "10.55.0.0/16",
                     "enableDnsHostnames": true,
                     "enableDnsSupport": true,
                     "instanceTenancy": "default",
@@ -45,7 +45,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.12.0.0/24",
+                        "cidrBlock": "10.55.0.0/24",
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
@@ -180,7 +180,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.12.1.0/24",
+                        "cidrBlock": "10.55.1.0/24",
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
@@ -315,7 +315,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.12.2.0/24",
+                        "cidrBlock": "10.55.2.0/24",
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
@@ -410,7 +410,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.12.3.0/24",
+                        "cidrBlock": "10.55.3.0/24",
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
@@ -543,7 +543,7 @@
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::VPC",
                   "aws:cdk:cloudformation:props": {
-                    "cidrBlock": "10.13.0.0/16",
+                    "cidrBlock": "10.56.0.0/16",
                     "enableDnsHostnames": true,
                     "enableDnsSupport": true,
                     "instanceTenancy": "default",
@@ -566,7 +566,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.13.0.0/24",
+                        "cidrBlock": "10.56.0.0/24",
                         "vpcId": {
                           "Ref": "vpcdev2A6F85476"
                         },
@@ -701,7 +701,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.13.1.0/24",
+                        "cidrBlock": "10.56.1.0/24",
                         "vpcId": {
                           "Ref": "vpcdev2A6F85476"
                         },
@@ -836,7 +836,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.13.2.0/24",
+                        "cidrBlock": "10.56.2.0/24",
                         "vpcId": {
                           "Ref": "vpcdev2A6F85476"
                         },
@@ -931,7 +931,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.13.3.0/24",
+                        "cidrBlock": "10.56.3.0/24",
                         "vpcId": {
                           "Ref": "vpcdev2A6F85476"
                         },
