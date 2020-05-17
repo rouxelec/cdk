@@ -5,10 +5,12 @@ import boto3
 import json
 import ipaddress
 
-default_vpc_cidr_range="10.0.0.0/16"
+#VPC informations
+vpc_size="/16"
+default_vpc_cidr_range="10.0.0.0"+vpc_size
+max_vpc_cidr_range="10.255.0.0"+vpc_size
+vpc_nb_ips=65536
 
-
-        
 
 class VPCPeeringConnection(ec2.CfnVPCPeeringConnection):
     def __init__(self,scope, id, **kwargs):
@@ -55,8 +57,6 @@ class CdkBlogVpcStack(core.Stack):
             }
         )
 
-        print('NEXT CIDR:')
-        print(next_cidr_range)
         return next_cidr_range
 
     def __init__(self, scope: core.Construct, id: str, vpc_name:str, **kwargs) -> None:
@@ -86,10 +86,6 @@ class CdkBlogVpcStack(core.Stack):
         )
         
         
-        
-        
-        
-        
 class CdkBlogVpcPeeringStack(core.Stack):
     def __init__(self, scope: core.Construct, id: str, vpc:ec2.Vpc,peer_vpc:ec2.Vpc, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
@@ -98,6 +94,10 @@ class CdkBlogVpcPeeringStack(core.Stack):
         
 def increment_cidr_range(current_cidr_range):
     startIp=current_cidr_range.split("/")[0]
-    newip = ipaddress.IPv4Address(startIp)+65536
-    return str(newip)+"/16"
+    newip = ipaddress.IPv4Address(startIp)+vpc_nb_ips
+    new_cidr_range=str(newip)+vpc_size
+    #check if we used all available cidr_range
+    if max_vpc_cidr_range == new_cidr_range:
+        new_cidr_range=default_vpc_cidr_range
+    return new_cidr_range
         
