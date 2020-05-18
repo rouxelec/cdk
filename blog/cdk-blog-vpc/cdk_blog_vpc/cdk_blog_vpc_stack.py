@@ -1,9 +1,17 @@
+import datetime
 from aws_cdk import core
 import aws_cdk.aws_ec2 as ec2
+import aws_cdk.aws_s3 as s3
+import aws_cdk.aws_lambda as aws_lambda
+import aws_cdk.aws_events as aws_events
+import aws_cdk.aws_events_targets as aws_events_targets
+import aws_cdk.aws_iam as iam
+
 from botocore.exceptions import ClientError
 import boto3
 import json
 import ipaddress
+
 
 #VPC informations
 vpc_size="/16"
@@ -42,14 +50,6 @@ class CdkBlogVpcStack(core.Stack):
             last_cidr_range=response['Item']['value']
             next_cidr_range=increment_cidr_range(last_cidr_range);
 
-        cidr_range_table = dynamodb.Table('cidr_range_table')
-        response_cidr_range_table = cidr_range_table.put_item(
-           Item={
-                'id': vpc_name,
-                'vpc': next_cidr_range
-            }
-        )
-        
         response_last_cidr_range_table = last_cidr_range_table.put_item(
            Item={
                 'id': 'last_cidr_range',
@@ -76,15 +76,50 @@ class CdkBlogVpcStack(core.Stack):
                 cidr_mask=24,
                 name="Application",
                 subnet_type=ec2.SubnetType.PRIVATE
-            ), ec2.SubnetConfiguration(
-                cidr_mask=28,
-                name="Database",
-                subnet_type=ec2.SubnetType.ISOLATED,
-                reserved=True
             )
             ]
         )
         
+        
+class CdkBlogMyLambdaStack(core.Stack):
+    def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
+        super().__init__(scope, id, **kwargs)
+        
+    
+        my_lambda_role = iam.Role(self, "Role",assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"))
+        
+        my_lambda_role.add_to_policy(iam.PolicyStatement(
+            effect=iam.Effect.ALLOW,
+            resources=["*"],
+            actions=["ec2:DescribeVpcs"]
+        ))
+        
+        lambda_code_bucket = s3.Bucket.from_bucket_attributes(
+            self, 'LambdaCodeBucket',
+            bucket_name='cdk-blog-vpc'
+        )
+        
+        my_lambda = aws_lambda.Function(self, "my_lambda_function",
+                                      runtime=aws_lambda.Runtime.PYTHON_3_6,
+                                      handler="lambda_function.lambda_handler",
+                                      #code=aws_lambda.Code.from_asset("./cdk_blog_vpc/lambda/"))
+                                      code=aws_lambda.S3Code(
+                                            bucket=lambda_code_bucket,
+                                            key='lambda_function.zip'
+                                        ),
+                                        role=my_lambda_role)
+                                        
+        # now + time to complete previous stacks
+        #now = datetime.datetime.now(timezone('US/Eastern')) + datetime.timedelta(minutes=15)
+        now = datetime.datetime.now()
+        one_time_rule = aws_events.Rule(
+            self, "one_minute_rule",
+            schedule=aws_events.Schedule.cron(minute=str(now.minute),hour=str(now.hour),day=str(now.day),month=str(now.month),year=str(now.year))
+        )
+
+        # Add target to Cloudwatch Event
+        one_time_rule.add_target(aws_events_targets.LambdaFunction(my_lambda))   
+
         
 class CdkBlogVpcPeeringStack(core.Stack):
     def __init__(self, scope: core.Construct, id: str, vpc:ec2.Vpc,peer_vpc:ec2.Vpc, **kwargs) -> None:
@@ -99,5 +134,6 @@ def increment_cidr_range(current_cidr_range):
     #check if we used all available cidr_range
     if max_vpc_cidr_range == new_cidr_range:
         new_cidr_range=default_vpc_cidr_range
+    print(new_cidr_range)
     return new_cidr_range
         
