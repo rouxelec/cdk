@@ -86,13 +86,15 @@ class CdkBlogMyLambdaStack(core.Stack):
         super().__init__(scope, id, **kwargs)
         
     
-        my_lambda_role = iam.Role(self, "Role",assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"))
+        my_lambda_role = iam.Role(self, "Role",assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"))
         
         my_lambda_role.add_to_policy(iam.PolicyStatement(
             effect=iam.Effect.ALLOW,
             resources=["*"],
-            actions=["ec2:DescribeVpcs"]
+            actions=["ec2:DescribeVpcs",
+                    "dynamodb:PutItem","ec2:DescribeSubnets"]
         ))
+        
         
         lambda_code_bucket = s3.Bucket.from_bucket_attributes(
             self, 'LambdaCodeBucket',
@@ -113,7 +115,7 @@ class CdkBlogMyLambdaStack(core.Stack):
         #now = datetime.datetime.now(timezone('US/Eastern')) + datetime.timedelta(minutes=15)
         now = datetime.datetime.now()
         one_time_rule = aws_events.Rule(
-            self, "one_minute_rule",
+            self, "one_time_rule",
             schedule=aws_events.Schedule.cron(minute=str(now.minute),hour=str(now.hour),day=str(now.day),month=str(now.month),year=str(now.year))
         )
 
