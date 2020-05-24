@@ -29,13 +29,10 @@ class VPCPeeringConnection(ec2.CfnVPCPeeringConnection):
 
 class CdkBlogVpcStack(core.Stack):
 
-    def get_next_cidr_range(self,vpc_name,**kwargs):
-        # The code that defines your stack goes here
+    def get_next_cidr_range(self,**kwargs):
         dynamodb = boto3.resource('dynamodb', region_name=kwargs['env'].region)
-
         # check if same vpc has been deployed once
         last_cidr_range_table = dynamodb.Table('last_cidr_range_table')
-
         try:
             response = last_cidr_range_table.get_item(
                 Key={
@@ -46,11 +43,14 @@ class CdkBlogVpcStack(core.Stack):
             print(e.response['Error']['Message'])
             next_cidr_range=default_vpc_cidr_range
         else:
-            item = response['Item']
-            print("GetItem succeeded:")
-            print(item)
-            last_cidr_range=response['Item']['value']
-            next_cidr_range=increment_cidr_range(last_cidr_range);
+            item = response.get('Item')
+            if item:
+                print("GetItem succeeded:")
+                print(item)
+                last_cidr_range=response['Item']['value']
+                next_cidr_range=increment_cidr_range(last_cidr_range);
+            else:
+                next_cidr_range=default_vpc_cidr_range    
 
         response_last_cidr_range_table = last_cidr_range_table.put_item(
            Item={
@@ -61,10 +61,41 @@ class CdkBlogVpcStack(core.Stack):
 
         return next_cidr_range
 
+
+    def get_current_or_next_cidr_range(self,vpc_name,**kwargs):
+        # The code that defines your stack goes here
+        dynamodb = boto3.resource('dynamodb', region_name=kwargs['env'].region)
+
+
+        print(vpc_name)
+        cidr_range_table = dynamodb.Table('cidr_range_table')
+        
+        try:
+            response = cidr_range_table.get_item(
+                Key={
+                    "id": vpc_name
+                }
+            )
+            print(response)
+        except ClientError as e:
+            print(e.response['Error']['Message'])
+            current_or_next_cidr_range=self.get_next_cidr_range(**kwargs)
+        else:
+            item = response.get('Item')
+            if item:
+                print("GetItem succeeded:")
+                print(item)
+                current_or_next_cidr_range=response['Item']['cidr_range']
+            else:
+                current_or_next_cidr_range=self.get_next_cidr_range(**kwargs)
+                
+        return current_or_next_cidr_range
+        
+        
     def __init__(self, scope: core.Construct, id: str, vpc_name:str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
             
-        next_cidr_range = self.get_next_cidr_range(vpc_name,**kwargs)
+        next_cidr_range = self.get_current_or_next_cidr_range(id+"/"+vpc_name,**kwargs)
         #Provisioning VPC
         self.vpc = ec2.Vpc(self, vpc_name,
             cidr=next_cidr_range,
@@ -74,10 +105,6 @@ class CdkBlogVpcStack(core.Stack):
                 subnet_type=ec2.SubnetType.PUBLIC,
                 name="Ingress",
                 cidr_mask=24
-            ), ec2.SubnetConfiguration(
-                cidr_mask=24,
-                name="Application",
-                subnet_type=ec2.SubnetType.PRIVATE
             )
             ]
         )
@@ -119,7 +146,6 @@ class CdkBlogMyCustomResource(core.Construct):
         ))
         
         _uuid=uuid.uuid1()
-        print(str(_uuid))
         resource = cfn.CustomResource(
             self, "Resource",
             provider=cfn.CustomResourceProvider.lambda_(
@@ -138,46 +164,7 @@ class CdkBlogMyCustomResource(core.Construct):
 
         self.response = resource.get_att("Response").to_string()
         
-class CdkBlogMyLambdaStack(core.Stack):
-    def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
-        super().__init__(scope, id, **kwargs)
-        
-    
-        my_lambda_role = iam.Role(self, "Role",assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"))
-        
-        my_lambda_role.add_to_policy(iam.PolicyStatement(
-            effect=iam.Effect.ALLOW,
-            resources=["*"],
-            actions=["ec2:DescribeVpcs",
-                    "dynamodb:PutItem","ec2:DescribeSubnets"]
-        ))
-        
-        
-        lambda_code_bucket = s3.Bucket.from_bucket_attributes(
-            self, 'LambdaCodeBucket',
-            bucket_name='cdk-blog-vpc'
-        )
-        
-        my_lambda = aws_lambda.Function(self, "my_lambda_function",
-                                      runtime=aws_lambda.Runtime.PYTHON_3_6,
-                                      handler="lambda_function.lambda_handler",
-                                      #code=aws_lambda.Code.from_asset("./cdk_blog_vpc/lambda/"))
-                                      code=aws_lambda.S3Code(
-                                            bucket=lambda_code_bucket,
-                                            key='lambda_function.zip'
-                                        ),
-                                        role=my_lambda_role)
-                                        
-        # now + time to complete previous stacks
-        #now = datetime.datetime.now(timezone('US/Eastern')) + datetime.timedelta(minutes=15)
-        now = datetime.datetime.now()
-        one_time_rule = aws_events.Rule(
-            self, "one_time_rule",
-            schedule=aws_events.Schedule.cron(minute=str(now.minute),hour=str(now.hour),day=str(now.day),month=str(now.month),year=str(now.year))
-        )
 
-        # Add target to Cloudwatch Event
-        one_time_rule.add_target(aws_events_targets.LambdaFunction(my_lambda))   
 
         
 class CdkBlogVpcPeeringStack(core.Stack):

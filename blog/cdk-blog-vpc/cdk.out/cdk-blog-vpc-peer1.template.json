@@ -1,0 +1,18 @@
+{
+  "Resources": {
+    "test": {
+      "Type": "AWS::EC2::VPCPeeringConnection",
+      "Properties": {
+        "PeerVpcId": {
+          "Fn::ImportValue": "cdk-blog-vpc-staging:ExportsOutputRefvpcstagingF0BF23A463A94C5D"
+        },
+        "VpcId": {
+          "Fn::ImportValue": "cdk-blog-vpc-dev1:ExportsOutputRefvpcdev122B8E28D3296F345"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "cdk-blog-vpc-peer1/test"
+      }
+    }
+  }
+}
