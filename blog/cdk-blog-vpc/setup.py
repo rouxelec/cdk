@@ -25,6 +25,7 @@ setuptools.setup(
         "aws-cdk.aws_events==1.36.1",
         "aws-cdk.aws_events_targets==1.36.1",
         "aws-cdk.aws_ec2==1.36.1",
+        "aws-cdk.aws_cloudformation==1.36.1",
         "boto3==1.13.6",
     ],
 

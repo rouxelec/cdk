@@ -22,7 +22,7 @@
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::VPC",
                   "aws:cdk:cloudformation:props": {
-                    "cidrBlock": "10.4.0.0/16",
+                    "cidrBlock": "10.20.0.0/16",
                     "enableDnsHostnames": true,
                     "enableDnsSupport": true,
                     "instanceTenancy": "default",
@@ -45,7 +45,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.4.0.0/24",
+                        "cidrBlock": "10.20.0.0/24",
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
@@ -180,7 +180,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.4.1.0/24",
+                        "cidrBlock": "10.20.1.0/24",
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
@@ -315,7 +315,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.4.2.0/24",
+                        "cidrBlock": "10.20.2.0/24",
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
@@ -410,7 +410,7 @@
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
                       "aws:cdk:cloudformation:props": {
-                        "cidrBlock": "10.4.3.0/24",
+                        "cidrBlock": "10.20.3.0/24",
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
@@ -529,153 +529,122 @@
           }
         }
       },
-      "cdk-blog-lambda": {
-        "id": "cdk-blog-lambda",
-        "path": "cdk-blog-lambda",
+      "cdk-blog-l-custom-resource": {
+        "id": "cdk-blog-l-custom-resource",
+        "path": "cdk-blog-l-custom-resource",
         "children": {
-          "Role": {
-            "id": "Role",
-            "path": "cdk-blog-lambda/Role",
+          "DemoResource": {
+            "id": "DemoResource",
+            "path": "cdk-blog-l-custom-resource/DemoResource",
             "children": {
-              "Resource": {
-                "id": "Resource",
-                "path": "cdk-blog-lambda/Role/Resource",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
-                  "aws:cdk:cloudformation:props": {
-                    "assumeRolePolicyDocument": {
-                      "Statement": [
-                        {
-                          "Action": "sts:AssumeRole",
-                          "Effect": "Allow",
-                          "Principal": {
-                            "Service": "lambda.amazonaws.com"
+              "Role": {
+                "id": "Role",
+                "path": "cdk-blog-l-custom-resource/DemoResource/Role",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "cdk-blog-l-custom-resource/DemoResource/Role/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "cdk-blog-l-custom-resource/DemoResource/Role/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "cdk-blog-l-custom-resource/DemoResource/Role/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "ec2:DescribeVpcs",
+                                    "dynamodb:PutItem",
+                                    "ec2:DescribeSubnets"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "DemoResourceRoleDefaultPolicy2D59AFBB",
+                            "roles": [
+                              {
+                                "Ref": "DemoResourceRole77B88CFC"
+                              }
+                            ]
                           }
                         }
-                      ],
-                      "Version": "2012-10-17"
+                      }
                     }
                   }
                 }
               },
-              "DefaultPolicy": {
-                "id": "DefaultPolicy",
-                "path": "cdk-blog-lambda/Role/DefaultPolicy",
+              "Singleton": {
+                "id": "Singleton",
+                "path": "cdk-blog-l-custom-resource/DemoResource/Singleton"
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-blog-l-custom-resource/DemoResource/Resource",
                 "children": {
-                  "Resource": {
-                    "id": "Resource",
-                    "path": "cdk-blog-lambda/Role/DefaultPolicy/Resource",
-                    "attributes": {
-                      "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
-                      "aws:cdk:cloudformation:props": {
-                        "policyDocument": {
-                          "Statement": [
-                            {
-                              "Action": [
-                                "ec2:DescribeVpcs",
-                                "dynamodb:PutItem",
-                                "ec2:DescribeSubnets"
-                              ],
-                              "Effect": "Allow",
-                              "Resource": "*"
-                            }
-                          ],
-                          "Version": "2012-10-17"
-                        },
-                        "policyName": "RoleDefaultPolicy5FFB7DAB",
-                        "roles": [
-                          {
-                            "Ref": "Role1ABCC5F0"
-                          }
-                        ]
-                      }
-                    }
+                  "Default": {
+                    "id": "Default",
+                    "path": "cdk-blog-l-custom-resource/DemoResource/Resource/Default"
                   }
                 }
               }
             }
           },
-          "LambdaCodeBucket": {
-            "id": "LambdaCodeBucket",
-            "path": "cdk-blog-lambda/LambdaCodeBucket"
-          },
-          "my_lambda_function": {
-            "id": "my_lambda_function",
-            "path": "cdk-blog-lambda/my_lambda_function",
+          "SingletonLambda2efb267a9d6011eab256129b54026e4d": {
+            "id": "SingletonLambda2efb267a9d6011eab256129b54026e4d",
+            "path": "cdk-blog-l-custom-resource/SingletonLambda2efb267a9d6011eab256129b54026e4d",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "cdk-blog-lambda/my_lambda_function/Resource",
+                "path": "cdk-blog-l-custom-resource/SingletonLambda2efb267a9d6011eab256129b54026e4d/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
-                      "s3Bucket": "cdk-blog-vpc",
-                      "s3Key": "lambda_function.zip"
+                      "zipFile": "import boto3\nimport time\nimport json\nimport logging as log\nimport cfnresponse\n\nlog.getLogger().setLevel(log.INFO)\n\n# This needs to change if there are to be multiple resources\n# in the same stack\nphysical_id = 'TheOnlyCustomResource'\n\nec2 = boto3.resource('ec2', region_name='ca-central-1')\nclient = boto3.client('ec2', region_name='ca-central-1')\ndynamodb = boto3.resource('dynamodb', region_name='ca-central-1')\n\ndef lambda_handler(event, context):\n    try:\n        log.info('Input event: %s', event)\n\n        # Check if this is a Create and we're failing Creates\n        if event['RequestType'] == 'Create' and event['ResourceProperties'].get('FailCreate', False):\n            raise RuntimeError('Create failure requested')\n\n        # Do the thing\n        message = event['ResourceProperties']['Message']\n        attributes = {\n            'Response': 'You said \"%s\"' % message\n        }\n    \n        update_dynamo()\n\n        cfnresponse.send(event, context, cfnresponse.SUCCESS,\n                         attributes, physical_id)\n    except Exception as e:\n        log.exception(e)\n        # cfnresponse's error message is always \"see CloudWatch\"\n        cfnresponse.send(event, context, cfnresponse.FAILED, {}, physical_id)\n\n\ndef update_dynamo():\n\n    filters = []\n    vpcs = list(ec2.vpcs.filter(Filters=filters))\n    \n    for vpc in vpcs:\n               response = client.describe_vpcs(\n                       VpcIds=[\n                           vpc.id,\n                       ]\n                   )\n               my_json=json.dumps(response, sort_keys=True, indent=4)    \n               print(response['Vpcs'])\n               cidr_range_table = dynamodb.Table('cidr_range_table')\n               \n               print(vpc.subnets.all())\n               for subnet in vpc.subnets.all():\n                          print(subnet.cidr_block)\n                          print(subnet.vpc_id)\n                          response_cidr_range_table = cidr_range_table.put_item(\n               \tItem={\n                               'id': subnet.subnet_id,\n                               'cidr_range': subnet.cidr_block,\n                               'vpc_id' : subnet.vpc_id,\n                               'type' : \"Subnet\"\n                           })\n               \n               vpc_name=''\n               if not response['Vpcs'][0].get('Tags') is None:\n                          if response['Vpcs'][0].get('Tags')[0]['Key']=='Name':                                 \n                                     print (response['Vpcs'][0].get('Tags')[0]['Value'])\n                                     vpc_name=response['Vpcs'][0].get('Tags')[0]['Value']\n               response_cidr_range_table = cidr_range_table.put_item(\n    \tItem={\n                    'id': response['Vpcs'][0]['VpcId'],\n                    'cidr_range': response['Vpcs'][0]['CidrBlock'],\n                    'vpc_name' : vpc_name,\n                    'type' : \"VPC\"\n                }\n               )\n                      \n           "
                     },
-                    "handler": "lambda_function.lambda_handler",
+                    "handler": "index.lambda_handler",
                     "role": {
                       "Fn::GetAtt": [
-                        "Role1ABCC5F0",
+                        "DemoResourceRole77B88CFC",
                         "Arn"
                       ]
                     },
-                    "runtime": "python3.6"
-                  }
-                }
-              },
-              "AllowEventRulecdkbloglambdaoneminuteruleA5F73F3E": {
-                "id": "AllowEventRulecdkbloglambdaoneminuteruleA5F73F3E",
-                "path": "cdk-blog-lambda/my_lambda_function/AllowEventRulecdkbloglambdaoneminuteruleA5F73F3E",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
-                  "aws:cdk:cloudformation:props": {
-                    "action": "lambda:InvokeFunction",
-                    "functionName": {
-                      "Fn::GetAtt": [
-                        "mylambdafunctionDF98DB11",
-                        "Arn"
-                      ]
-                    },
-                    "principal": "events.amazonaws.com",
-                    "sourceArn": {
-                      "Fn::GetAtt": [
-                        "oneminuteruleE9168CE5",
-                        "Arn"
-                      ]
-                    }
+                    "runtime": "python3.7",
+                    "timeout": 300
                   }
                 }
               }
             }
           },
-          "one_minute_rule": {
-            "id": "one_minute_rule",
-            "path": "cdk-blog-lambda/one_minute_rule",
-            "children": {
-              "Resource": {
-                "id": "Resource",
-                "path": "cdk-blog-lambda/one_minute_rule/Resource",
-                "attributes": {
-                  "aws:cdk:cloudformation:type": "AWS::Events::Rule",
-                  "aws:cdk:cloudformation:props": {
-                    "scheduleExpression": "cron(7 1 19 5 ? 2020)",
-                    "state": "ENABLED",
-                    "targets": [
-                      {
-                        "id": "Target0",
-                        "arn": {
-                          "Fn::GetAtt": [
-                            "mylambdafunctionDF98DB11",
-                            "Arn"
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
-              }
-            }
+          "ResponseMessage": {
+            "id": "ResponseMessage",
+            "path": "cdk-blog-l-custom-resource/ResponseMessage"
           }
         }
       }

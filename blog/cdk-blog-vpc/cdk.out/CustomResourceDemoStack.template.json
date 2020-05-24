@@ -1,0 +1,89 @@
+{
+  "Resources": {
+    "DemoResource5B5C546C": {
+      "Type": "AWS::CloudFormation::CustomResource",
+      "Properties": {
+        "ServiceToken": {
+          "Fn::GetAtt": [
+            "SingletonLambdaf7d4f7304ee111e89c2dfa7ae01bbebc492C6E5C",
+            "Arn"
+          ]
+        },
+        "Message": "CustomResource says hello"
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "CustomResourceDemoStack/DemoResource/Resource/Default"
+      }
+    },
+    "SingletonLambdaf7d4f7304ee111e89c2dfa7ae01bbebcServiceRoleFE9ABB04": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "CustomResourceDemoStack/SingletonLambdaf7d4f7304ee111e89c2dfa7ae01bbebc/ServiceRole/Resource"
+      }
+    },
+    "SingletonLambdaf7d4f7304ee111e89c2dfa7ae01bbebc492C6E5C": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "ZipFile": "import boto3\nimport time\nimport json\nimport logging as log\nimport cfnresponse\n\nlog.getLogger().setLevel(log.INFO)\n\n# This needs to change if there are to be multiple resources\n# in the same stack\nphysical_id = 'TheOnlyCustomResource'\n\nec2 = boto3.resource('ec2', region_name='ca-central-1')\nclient = boto3.client('ec2', region_name='ca-central-1')\ndynamodb = boto3.resource('dynamodb', region_name='ca-central-1')\n\ndef lambda_handler(event, context):\n    try:\n        log.info('Input event: %s', event)\n\n        # Check if this is a Create and we're failing Creates\n        if event['RequestType'] == 'Create' and event['ResourceProperties'].get('FailCreate', False):\n            raise RuntimeError('Create failure requested')\n\n        # Do the thing\n        message = event['ResourceProperties']['Message']\n        attributes = {\n            'Response': 'You said \"%s\"' % message\n        }\n    \n        update_dynamo()\n\n        cfnresponse.send(event, context, cfnresponse.SUCCESS,\n                         attributes, physical_id)\n    except Exception as e:\n        log.exception(e)\n        # cfnresponse's error message is always \"see CloudWatch\"\n        cfnresponse.send(event, context, cfnresponse.FAILED, {}, physical_id)\n\n\ndef update_dynamo():\n\n    filters = []\n    vpcs = list(ec2.vpcs.filter(Filters=filters))\n    \n    for vpc in vpcs:\n               response = client.describe_vpcs(\n                       VpcIds=[\n                           vpc.id,\n                       ]\n                   )\n               my_json=json.dumps(response, sort_keys=True, indent=4)    \n               print(response['Vpcs'])\n               cidr_range_table = dynamodb.Table('cidr_range_table')\n               \n               print(vpc.subnets.all())\n               for subnet in vpc.subnets.all():\n                          print(subnet.cidr_block)\n                          print(subnet.vpc_id)\n                          response_cidr_range_table = cidr_range_table.put_item(\n               \tItem={\n                               'id': subnet.subnet_id,\n                               'cidr_range': subnet.cidr_block,\n                               'vpc_id' : subnet.vpc_id,\n                               'type' : \"Subnet\"\n                           })\n               \n               vpc_name=''\n               if not response['Vpcs'][0].get('Tags') is None:\n                          if response['Vpcs'][0].get('Tags')[0]['Key']=='Name':                                 \n                                     print (response['Vpcs'][0].get('Tags')[0]['Value'])\n                                     vpc_name=response['Vpcs'][0].get('Tags')[0]['Value']\n               response_cidr_range_table = cidr_range_table.put_item(\n    \tItem={\n                    'id': response['Vpcs'][0]['VpcId'],\n                    'cidr_range': response['Vpcs'][0]['CidrBlock'],\n                    'vpc_name' : vpc_name,\n                    'type' : \"VPC\"\n                }\n               )\n                      \n           "
+        },
+        "Handler": "index.main",
+        "Role": {
+          "Fn::GetAtt": [
+            "SingletonLambdaf7d4f7304ee111e89c2dfa7ae01bbebcServiceRoleFE9ABB04",
+            "Arn"
+          ]
+        },
+        "Runtime": "python3.7",
+        "Timeout": 300
+      },
+      "DependsOn": [
+        "SingletonLambdaf7d4f7304ee111e89c2dfa7ae01bbebcServiceRoleFE9ABB04"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "CustomResourceDemoStack/SingletonLambdaf7d4f7304ee111e89c2dfa7ae01bbebc/Resource"
+      }
+    }
+  },
+  "Outputs": {
+    "ResponseMessage": {
+      "Description": "The message that came back from the Custom Resource",
+      "Value": {
+        "Fn::GetAtt": [
+          "DemoResource5B5C546C",
+          "Response"
+        ]
+      }
+    }
+  }
+}

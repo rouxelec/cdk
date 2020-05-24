@@ -6,6 +6,7 @@ from aws_cdk import core
 from cdk_blog_vpc.cdk_blog_vpc_stack import CdkBlogVpcStack
 from cdk_blog_vpc.cdk_blog_vpc_stack import CdkBlogVpcPeeringStack
 from cdk_blog_vpc.cdk_blog_vpc_stack import CdkBlogMyLambdaStack
+from cdk_blog_vpc.cdk_blog_vpc_stack import CdkBlogMyCustomResourceStack
 
 
 env_CA = core.Environment(region="ca-central-1")
@@ -15,8 +16,10 @@ app = core.App()
 
 #devs vpc
 vpc_dev1_stack=CdkBlogVpcStack(app, id="cdk-blog-vpc-dev1", vpc_name="vpc-dev1", env=env_CA)
-my_lambda_stack=CdkBlogMyLambdaStack(app, id="cdk-blog-lambda", env=env_CA)
-my_lambda_stack.add_dependency(vpc_dev1_stack);
+my_custom_resource=CdkBlogMyCustomResourceStack(app, "cdk-blog-l-custom-resource", env=env_CA)
+my_custom_resource.add_dependency(vpc_dev1_stack);
+#my_lambda_stack=CdkBlogMyLambdaStack(app, id="cdk-blog-lambda", env=env_CA)
+#my_lambda_stack.add_dependency(vpc_dev1_stack);
 
 #vpc_dev2_stack=CdkBlogVpcStack(app, id="cdk-blog-vpc-dev2", vpc_name="vpc-dev2", env=env_CA)
 # you can add more...

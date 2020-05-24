@@ -1,4 +1,5 @@
 import datetime
+import uuid
 from aws_cdk import core
 import aws_cdk.aws_ec2 as ec2
 import aws_cdk.aws_s3 as s3
@@ -6,6 +7,7 @@ import aws_cdk.aws_lambda as aws_lambda
 import aws_cdk.aws_events as aws_events
 import aws_cdk.aws_events_targets as aws_events_targets
 import aws_cdk.aws_iam as iam
+import aws_cdk.aws_cloudformation as cfn
 
 from botocore.exceptions import ClientError
 import boto3
@@ -80,6 +82,61 @@ class CdkBlogVpcStack(core.Stack):
             ]
         )
         
+
+class CdkBlogMyCustomResourceStack(core.Stack):
+    def __init__(self, scope: core.App, id: str, **kwargs) -> None:
+        super().__init__(scope, id, **kwargs)
+
+        resource = CdkBlogMyCustomResource(
+            self, "DemoResource",
+            message="CustomResource says hello",
+        )
+
+        # Publish the custom resource output
+        core.CfnOutput(
+            self, "ResponseMessage",
+            description="The message that came back from the Custom Resource",
+            value=resource.response,
+        )
+
+
+class CdkBlogMyCustomResource(core.Construct):
+    def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
+        super().__init__(scope, id)
+
+        print('reading code source...')
+        with open("./cdk_blog_vpc/lambda/lambda_function.py", encoding="utf-8") as fp:
+            code_body = fp.read()
+        print('code source ok...')
+
+        my_lambda_role = iam.Role(self, "Role",assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"))
+        
+        my_lambda_role.add_to_policy(iam.PolicyStatement(
+            effect=iam.Effect.ALLOW,
+            resources=["*"],
+            actions=["ec2:DescribeVpcs",
+                    "dynamodb:PutItem","ec2:DescribeSubnets"]
+        ))
+        
+        _uuid=uuid.uuid1()
+        print(str(_uuid))
+        resource = cfn.CustomResource(
+            self, "Resource",
+            provider=cfn.CustomResourceProvider.lambda_(
+                aws_lambda.SingletonFunction(
+                    self, "Singleton",
+                    uuid=str(_uuid),
+                    code=aws_lambda.InlineCode(code_body),
+                    handler="index.lambda_handler",
+                    timeout=core.Duration.seconds(300),
+                    runtime=aws_lambda.Runtime.PYTHON_3_7,
+                    role=my_lambda_role
+                )
+            ),
+            properties=kwargs,
+        )
+
+        self.response = resource.get_att("Response").to_string()
         
 class CdkBlogMyLambdaStack(core.Stack):
     def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
