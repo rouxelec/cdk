@@ -1,11 +1,38 @@
 import boto3
 import time
 import json
+import subprocess
+
 
 ec2 = boto3.resource('ec2', region_name='ca-central-1')
 client = boto3.client('ec2', region_name='ca-central-1')
 dynamodb = boto3.resource('dynamodb', region_name='ca-central-1')
 
+
+cidr_range_table = dynamodb.Table('cidr_range_table')
+response = cidr_range_table.scan()
+for item in response['Items']:
+    print(item)
+    ip=item.get('ec2_ip_address')
+    vpc_name=item.get('id')
+    if not ip is None:
+        out = subprocess.Popen(['ping', ip, '-n', '1', '-w', '1'], 
+           stdout=subprocess.PIPE, 
+           stderr=subprocess.STDOUT)
+        stdout,stderr = out.communicate()
+        response = cidr_range_table.update_item(
+            Key={
+                'id': "the_defaut"
+            },
+            UpdateExpression="SET ping_from_"+str(ip.replace('.',"_"))+" = :r",
+            ExpressionAttributeValues={
+                ':r':  str(stdout),
+            },
+            ReturnValues="UPDATED_NEW"
+        )
+        
+
+print(response)
 
 filters = []
 vpcs = list(ec2.vpcs.filter(Filters=filters))
@@ -33,20 +60,26 @@ for vpc in vpcs:
                                 'vpc_id' : subnet.vpc_id,
                                 'type' : "Subnet",
                                 'subnet_id': subnet.subnet_id
+        
                              })
-    
+    private_ip_address=''
+    for instance in vpc.instances.all():
+        print(instance.private_ip_address)
+        private_ip_address=instance.private_ip_address
+
     vpc_name=''
     if not response['Vpcs'][0].get('Tags') is None:
         for tag in response['Vpcs'][0].get('Tags'):
             if tag['Key']=='Name':  
                 vpc_name=tag['Value']
-                response_cidr_range_table = cidr_range_table.put_item(
-                Item={
-                    'id': vpc_name,
-                    'cidr_range': response['Vpcs'][0]['CidrBlock'],
-                    'vpc_id' : response['Vpcs'][0]['VpcId'],
-                    'type' : "VPC"
-                    }
-                )
-                      
-           
+                #response_cidr_range_table = cidr_range_table.put_item(
+                #Item={
+                #    'id': vpc_name,
+                #    'cidr_range': response['Vpcs'][0]['CidrBlock'],
+                #    'vpc_id' : response['Vpcs'][0]['VpcId'],
+                #    'type' : "VPC",
+                #    'ec2_ip_address' : private_ip_address
+                #    }
+                #)
+                
+

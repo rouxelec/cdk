@@ -61,21 +61,29 @@ def update_dynamo():
                                 'id': subnet_name,
                                 'cidr_range': subnet.cidr_block,
                                 'vpc_id' : subnet.vpc_id,
-                                'type' : "Subnet",
+                                'component_type' : "Subnet",
                                 'subnet_id': subnet.subnet_id
                         })          
-        vpc_name=''
-        if not response['Vpcs'][0].get('Tags') is None:
-            for tag in response['Vpcs'][0].get('Tags'):
-                if tag['Key']=='Name':  
-                    vpc_name=tag['Value']
-                    response_cidr_range_table = cidr_range_table.put_item(
-                    Item={
-                        'id': vpc_name,
-                        'cidr_range': response['Vpcs'][0]['CidrBlock'],
-                        'vpc_id' : response['Vpcs'][0]['VpcId'],
-                        'type' : "VPC"
-                        }
-                    )
+                        
+        
+    private_ip_address=''
+    for instance in vpc.instances.all():
+        print(instance.private_ip_address)
+        private_ip_address=instance.private_ip_address
+
+    vpc_name=''
+    if not response['Vpcs'][0].get('Tags') is None:
+        for tag in response['Vpcs'][0].get('Tags'):
+            if tag['Key']=='Name':  
+                vpc_name=tag['Value']
+                response_cidr_range_table = cidr_range_table.put_item(
+                Item={
+                    'id': vpc_name,
+                    'cidr_range': response['Vpcs'][0]['CidrBlock'],
+                    'vpc_id' : response['Vpcs'][0]['VpcId'],
+                    'component_type' : "VPC",
+                    'ec2_ip_address' : private_ip_address
+                    }
+                )
                       
            

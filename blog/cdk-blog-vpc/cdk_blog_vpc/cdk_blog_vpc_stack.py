@@ -173,6 +173,60 @@ class CdkBlogVpcPeeringStack(core.Stack):
         vpc_peer=VPCPeeringConnection(self,'test', vpc_id=vpc.vpc_id, peer_vpc_id=peer_vpc.vpc_id)
         
         
+class EC2InstanceStack(core.Stack):
+
+    def __init__(self, scope: core.Construct, id: str,vpc:ec2.Vpc, **kwargs) -> None:
+        super().__init__(scope, id, **kwargs)
+
+
+        # AMI 
+        amzn_linux = ec2.MachineImage.latest_amazon_linux(
+            generation=ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
+            edition=ec2.AmazonLinuxEdition.STANDARD,
+            virtualization=ec2.AmazonLinuxVirt.HVM,
+            storage=ec2.AmazonLinuxStorage.GENERAL_PURPOSE
+            )
+
+        my_ec2_role = iam.Role(self, "Role",assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"))
+        
+        my_ec2_role.add_to_policy(iam.PolicyStatement(
+            effect=iam.Effect.ALLOW,
+            resources=["*"],
+            actions=["dynamodb:Scan",
+                    "dynamodb:PutItem"]
+        ))
+
+        # Instance
+        instance = ec2.Instance(self, "Instance",
+            instance_type=ec2.InstanceType("t2.micro"),
+            machine_image=amzn_linux,
+            vpc = vpc,
+            role = my_ec2_role
+            )
+
+        instance.user_data.add_commands(
+            "yum update -y"
+        )
+        instance.user_data.add_commands(
+            "yum install python3 -y"
+        )
+        instance.user_data.add_commands(
+            "yum install git -y"
+        )
+        instance.user_data.add_commands(
+            "pip3 install boto3"
+        )
+        instance.user_data.add_commands(
+            "git clone https://github.com/rouxelec/ec2_user_data.git"
+        )
+        instance.user_data.add_commands(
+            "cd ec2_user_data"
+        )
+        instance.user_data.add_commands(
+            "python3 userdata.py >> /tmp/test"
+        )
+        
+        
 def increment_cidr_range(current_cidr_range):
     startIp=current_cidr_range.split("/")[0]
     newip = ipaddress.IPv4Address(startIp)+vpc_nb_ips
