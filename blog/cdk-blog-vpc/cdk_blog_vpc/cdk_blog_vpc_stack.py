@@ -115,7 +115,7 @@ class CdkBlogMyCustomResourceStack(core.Stack):
         super().__init__(scope, id, **kwargs)
 
         resource = CdkBlogMyCustomResource(
-            self, "DemoResource",
+            self, "cdk-blog-resource",
             message="CustomResource says hello",
         )
 
@@ -136,13 +136,12 @@ class CdkBlogMyCustomResource(core.Construct):
             code_body = fp.read()
         print('code source ok...')
 
-        my_lambda_role = iam.Role(self, "Role",assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"))
+        my_lambda_role = iam.Role(self, "Role_lambda",assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"))
         
         my_lambda_role.add_to_policy(iam.PolicyStatement(
             effect=iam.Effect.ALLOW,
             resources=["*"],
-            actions=["ec2:DescribeVpcs",
-                    "dynamodb:PutItem","ec2:DescribeSubnets"]
+            actions=["ec2:DescribeVpcs","ec2:DescribeInstances","ec2:DescribeInstanceAttribute","dynamodb:PutItem","ec2:DescribeSubnets"]
         ))
         
         _uuid=uuid.uuid1()
@@ -187,45 +186,38 @@ class EC2InstanceStack(core.Stack):
             storage=ec2.AmazonLinuxStorage.GENERAL_PURPOSE
             )
 
-        my_ec2_role = iam.Role(self, "Role",assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"))
+        my_ec2_role = iam.Role(self, "Role_ec2",assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"))
         
         my_ec2_role.add_to_policy(iam.PolicyStatement(
             effect=iam.Effect.ALLOW,
             resources=["*"],
             actions=["dynamodb:Scan",
-                    "dynamodb:PutItem"]
+                    "dynamodb:PutItem","dynamodb:UpdateItem"]
         ))
+
+
+        allow_ping_security_group = ec2.SecurityGroup(self, "SecurityGroup",
+            vpc=vpc,
+            description="Allow ping",
+            allow_all_outbound=True
+        )
+        allow_ping_security_group.add_ingress_rule(ec2.Peer.ipv4(default_vpc_cidr_range), ec2.Port.icmp_ping(), "allow ssh access from the world")
 
         # Instance
         instance = ec2.Instance(self, "Instance",
             instance_type=ec2.InstanceType("t2.micro"),
             machine_image=amzn_linux,
             vpc = vpc,
+            key_name = "test-ec2",
             role = my_ec2_role
             )
 
+        instance.add_security_group(allow_ping_security_group)
+
         instance.user_data.add_commands(
-            "yum update -y"
+            "yum update -y","yum install python3 -y","yum install git -y","pip3 install boto3","git clone https://github.com/rouxelec/ec2_user_data.git",'echo "* * * * * python3 /ec2_user_data/userdata.py" >> /tmp/montest','crontab /tmp/montest'
         )
-        instance.user_data.add_commands(
-            "yum install python3 -y"
-        )
-        instance.user_data.add_commands(
-            "yum install git -y"
-        )
-        instance.user_data.add_commands(
-            "pip3 install boto3"
-        )
-        instance.user_data.add_commands(
-            "git clone https://github.com/rouxelec/ec2_user_data.git"
-        )
-        instance.user_data.add_commands(
-            "cd ec2_user_data"
-        )
-        instance.user_data.add_commands(
-            "python3 userdata.py >> /tmp/test"
-        )
-        
+
         
 def increment_cidr_range(current_cidr_range):
     startIp=current_cidr_range.split("/")[0]

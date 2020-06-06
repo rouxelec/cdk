@@ -16,9 +16,10 @@ app = core.App()
 
 #devs vpc
 vpc_dev1_stack=CdkBlogVpcStack(app, id="cdk-blog-vpc-dev1", vpc_name="vpc-dev1", env=env_CA)
-my_custom_resource=CdkBlogMyCustomResourceStack(app, "cdk-blog-custom-resource", env=env_CA)
-my_ec2=EC2InstanceStack(app, "cdk-blog-ec2",vpc_dev1_stack, env=env_CA)
-my_custom_resource.add_dependency(vpc_dev1_stack);
+my_custom_resource=CdkBlogMyCustomResourceStack(app, "cdk-blog-custom-resource2", env=env_CA)
+my_ec2=EC2InstanceStack(app, "cdk-blog-ec2",vpc_dev1_stack.vpc, env=env_CA)
+my_custom_resource.add_dependency(my_ec2);
+my_ec2.add_dependency(vpc_dev1_stack);
 #vpc_dev2_stack=CdkBlogVpcStack(app, id="cdk-blog-vpc-dev2", vpc_name="vpc-dev2", env=env_CA)
 # you can add more...
 

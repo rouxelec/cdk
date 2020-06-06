@@ -1,6 +1,6 @@
 {
   "Resources": {
-    "DemoResourceRole77B88CFC": {
+    "DemoResourceRolelambdaB09834A4": {
       "Type": "AWS::IAM::Role",
       "Properties": {
         "AssumeRolePolicyDocument": {
@@ -17,10 +17,10 @@
         }
       },
       "Metadata": {
-        "aws:cdk:path": "cdk-blog-custom-resource/DemoResource/Role/Resource"
+        "aws:cdk:path": "cdk-blog-custom-resource/DemoResource/Role_lambda/Resource"
       }
     },
-    "DemoResourceRoleDefaultPolicy2D59AFBB": {
+    "DemoResourceRolelambdaDefaultPolicy48AC187B": {
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyDocument": {
@@ -37,15 +37,15 @@
           ],
           "Version": "2012-10-17"
         },
-        "PolicyName": "DemoResourceRoleDefaultPolicy2D59AFBB",
+        "PolicyName": "DemoResourceRolelambdaDefaultPolicy48AC187B",
         "Roles": [
           {
-            "Ref": "DemoResourceRole77B88CFC"
+            "Ref": "DemoResourceRolelambdaB09834A4"
           }
         ]
       },
       "Metadata": {
-        "aws:cdk:path": "cdk-blog-custom-resource/DemoResource/Role/DefaultPolicy/Resource"
+        "aws:cdk:path": "cdk-blog-custom-resource/DemoResource/Role_lambda/DefaultPolicy/Resource"
       }
     },
     "DemoResource5B5C546C": {
@@ -53,7 +53,7 @@
       "Properties": {
         "ServiceToken": {
           "Fn::GetAtt": [
-            "SingletonLambda2c21de04a39011eabc40129b54026e4d71F73B40",
+            "SingletonLambdaf3f47610a79311ea8a98129b54026e4d67032509",
             "Arn"
           ]
         },
@@ -65,16 +65,16 @@
         "aws:cdk:path": "cdk-blog-custom-resource/DemoResource/Resource/Default"
       }
     },
-    "SingletonLambda2c21de04a39011eabc40129b54026e4d71F73B40": {
+    "SingletonLambdaf3f47610a79311ea8a98129b54026e4d67032509": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
-          "ZipFile": "import boto3\nimport time\nimport json\nimport logging as log\nimport cfnresponse\n\nlog.getLogger().setLevel(log.INFO)\n\n# This needs to change if there are to be multiple resources\n# in the same stack\nphysical_id = 'TheOnlyCustomResource'\n\nec2 = boto3.resource('ec2', region_name='ca-central-1')\nclient = boto3.client('ec2', region_name='ca-central-1')\ndynamodb = boto3.resource('dynamodb', region_name='ca-central-1')\ncidr_range_table = dynamodb.Table('cidr_range_table')\n\ndef lambda_handler(event, context):\n    try:\n        log.info('Input event: %s', event)\n\n        # Check if this is a Create and we're failing Creates\n        if event['RequestType'] == 'Create' and event['ResourceProperties'].get('FailCreate', False):\n            raise RuntimeError('Create failure requested')\n\n        # Do the thing\n        message = event['ResourceProperties']['Message']\n        attributes = {\n            'Response': 'You said \"%s\"' % message\n        }\n    \n        update_dynamo()\n\n        cfnresponse.send(event, context, cfnresponse.SUCCESS,\n                         attributes, physical_id)\n    except Exception as e:\n        log.exception(e)\n        # cfnresponse's error message is always \"see CloudWatch\"\n        cfnresponse.send(event, context, cfnresponse.FAILED, {}, physical_id)\n\ndef update_dynamo():\n\n    filters = []\n    vpcs = list(ec2.vpcs.filter(Filters=filters))\n    \n    for vpc in vpcs:\n        response = client.describe_vpcs(\n        VpcIds=[\n            vpc.id,\n            ]\n        )\n        my_json=json.dumps(response, sort_keys=True, indent=4)    \n        for subnet in vpc.subnets.all():\n            subnet_name=''\n            if not subnet.tags==None:\n                for tag in subnet.tags:\n                    if tag['Key']==\"Name\":\n                        subnet_name=tag['Value']\n                        response_cidr_range_table = cidr_range_table.put_item(\n                            Item={\n                                'id': subnet_name,\n                                'cidr_range': subnet.cidr_block,\n                                'vpc_id' : subnet.vpc_id,\n                                'component_type' : \"Subnet\",\n                                'subnet_id': subnet.subnet_id\n                        })          \n                        \n        \n    private_ip_address=''\n    for instance in vpc.instances.all():\n        print(instance.private_ip_address)\n        private_ip_address=instance.private_ip_address\n\n    vpc_name=''\n    if not response['Vpcs'][0].get('Tags') is None:\n        for tag in response['Vpcs'][0].get('Tags'):\n            if tag['Key']=='Name':  \n                vpc_name=tag['Value']\n                response_cidr_range_table = cidr_range_table.put_item(\n                Item={\n                    'id': vpc_name,\n                    'cidr_range': response['Vpcs'][0]['CidrBlock'],\n                    'vpc_id' : response['Vpcs'][0]['VpcId'],\n                    'component_type' : \"VPC\",\n                    'ec2_ip_address' : private_ip_address\n                    }\n                )\n                      \n           "
+          "ZipFile": "import boto3\nimport time\nimport json\nimport logging as log\nimport cfnresponse\n\nlog.getLogger().setLevel(log.INFO)\n\n# This needs to change if there are to be multiple resources\n# in the same stack\nphysical_id = 'TheOnlyCustomResource'\n\nec2 = boto3.resource('ec2', region_name='ca-central-1')\nclient = boto3.client('ec2', region_name='ca-central-1')\ndynamodb = boto3.resource('dynamodb', region_name='ca-central-1')\ncidr_range_table = dynamodb.Table('cidr_range_table')\n\ndef lambda_handler(event, context):\n   print(\"test\")"
         },
         "Handler": "index.lambda_handler",
         "Role": {
           "Fn::GetAtt": [
-            "DemoResourceRole77B88CFC",
+            "DemoResourceRolelambdaB09834A4",
             "Arn"
           ]
         },
@@ -82,11 +82,11 @@
         "Timeout": 300
       },
       "DependsOn": [
-        "DemoResourceRoleDefaultPolicy2D59AFBB",
-        "DemoResourceRole77B88CFC"
+        "DemoResourceRolelambdaDefaultPolicy48AC187B",
+        "DemoResourceRolelambdaB09834A4"
       ],
       "Metadata": {
-        "aws:cdk:path": "cdk-blog-custom-resource/SingletonLambda2c21de04a39011eabc40129b54026e4d/Resource"
+        "aws:cdk:path": "cdk-blog-custom-resource/SingletonLambdaf3f47610a79311ea8a98129b54026e4d/Resource"
       }
     }
   },
