@@ -1,5 +1,6 @@
 import datetime
 import uuid
+import random
 from aws_cdk import core
 import aws_cdk.aws_ec2 as ec2
 import aws_cdk.aws_s3 as s3
@@ -95,10 +96,10 @@ class CdkBlogVpcStack(core.Stack):
     def __init__(self, scope: core.Construct, id: str, vpc_name:str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
             
-        next_cidr_range = self.get_current_or_next_cidr_range(id+"/"+vpc_name,**kwargs)
+        self.next_cidr_range = self.get_current_or_next_cidr_range(id+"/"+vpc_name,**kwargs)
         #Provisioning VPC
         self.vpc = ec2.Vpc(self, vpc_name,
-            cidr=next_cidr_range,
+            cidr=self.next_cidr_range,
             max_azs=3,
 
             subnet_configuration=[ec2.SubnetConfiguration(
@@ -164,12 +165,21 @@ class CdkBlogMyCustomResource(core.Construct):
         self.response = resource.get_att("Response").to_string()
         
 
-
-        
 class CdkBlogVpcPeeringStack(core.Stack):
-    def __init__(self, scope: core.Construct, id: str, vpc:ec2.Vpc,peer_vpc:ec2.Vpc, **kwargs) -> None:
+    def __init__(self, scope: core.Construct, id: str, vpc_cidr:str,vpc:ec2.Vpc,peer_vpc_cidr:str,peer_vpc:ec2.Vpc, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
-        vpc_peer=VPCPeeringConnection(self,'test', vpc_id=vpc.vpc_id, peer_vpc_id=peer_vpc.vpc_id)
+        vpc_peer=VPCPeeringConnection(self,'vpc_peering_connection', vpc_id=vpc.vpc_id, peer_vpc_id=peer_vpc.vpc_id)
+        #route_table=ec2.CfnRouteTable(self, id='route_table',vpc_id=vpc.vpc_id)
+        #print(route_table)
+        #ec2.CfnRoute(self,'route',route_table_id=route_table.route_table_id ,destination_cidr_block=peer_vpc.vpc_cidr_block ,vpc_peering_connection_id=id )
+        i=random.randint(1,10000)
+        for subnet in vpc.public_subnets:
+            i=random.randint(1,10000)
+            subnet.add_route('route'+str(i),router_id=vpc_peer.ref,destination_cidr_block =peer_vpc_cidr,router_type=ec2.RouterType.VPC_PEERING_CONNECTION)
+        for subnet in peer_vpc.public_subnets:
+            i=random.randint(1,10000)
+            subnet.add_route('route'+str(i),router_id=vpc_peer.ref,destination_cidr_block =vpc_cidr,router_type=ec2.RouterType.VPC_PEERING_CONNECTION)
+
         
         
 class EC2InstanceStack(core.Stack):
@@ -201,7 +211,7 @@ class EC2InstanceStack(core.Stack):
             description="Allow ping",
             allow_all_outbound=True
         )
-        allow_ping_security_group.add_ingress_rule(ec2.Peer.ipv4(default_vpc_cidr_range), ec2.Port.icmp_ping(), "allow ssh access from the world")
+        allow_ping_security_group.add_ingress_rule(ec2.Peer.ipv4("10.0.0.0/8"), ec2.Port.icmp_ping(), "allow ssh access from the world")
 
         # Instance
         instance = ec2.Instance(self, "Instance",

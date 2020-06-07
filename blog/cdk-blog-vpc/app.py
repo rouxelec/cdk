@@ -2,6 +2,8 @@
 import boto3
 import time
 from aws_cdk import core
+import random
+import aws_cdk.aws_ec2 as ec2
 
 from cdk_blog_vpc.cdk_blog_vpc_stack import CdkBlogVpcStack
 from cdk_blog_vpc.cdk_blog_vpc_stack import CdkBlogVpcPeeringStack
@@ -17,26 +19,35 @@ app = core.App()
 #devs vpc
 vpc_dev1_stack=CdkBlogVpcStack(app, id="cdk-blog-vpc-dev1", vpc_name="vpc-dev1", env=env_CA)
 my_custom_resource=CdkBlogMyCustomResourceStack(app, "cdk-blog-custom-resource2", env=env_CA)
-my_ec2=EC2InstanceStack(app, "cdk-blog-ec2",vpc_dev1_stack.vpc, env=env_CA)
-my_custom_resource.add_dependency(my_ec2);
-my_ec2.add_dependency(vpc_dev1_stack);
-#vpc_dev2_stack=CdkBlogVpcStack(app, id="cdk-blog-vpc-dev2", vpc_name="vpc-dev2", env=env_CA)
+my_ec2_dev1=EC2InstanceStack(app, "cdk-blog-vpc1-ec2",vpc_dev1_stack.vpc, env=env_CA)
+#my_custom_resource.add_dependency(my_ec2_dev1);
+my_ec2_dev1.add_dependency(vpc_dev1_stack);
+vpc_dev2_stack=CdkBlogVpcStack(app, id="cdk-blog-vpc-dev2", vpc_name="vpc-dev2", env=env_CA)
+my_ec2_dev2=EC2InstanceStack(app, "cdk-blog-vcp2-ec2",vpc_dev2_stack.vpc, env=env_CA)
+my_ec2_dev2.add_dependency(vpc_dev2_stack);
 # you can add more...
 
 #staging vpc
-#vpc_staging_stack=CdkBlogVpcStack(app, id="cdk-blog-vpc-staging", vpc_name="vpc-staging", env=env_CA)
-
+vpc_staging_stack=CdkBlogVpcStack(app, id="cdk-blog-vpc-staging", vpc_name="vpc-staging", env=env_CA)
+my_ec2_staging=EC2InstanceStack(app, "cdk-blog-vpc-staging-ec2",vpc_staging_stack.vpc, env=env_CA)
+my_ec2_staging.add_dependency(vpc_staging_stack);
 #staging vpc will be created only once dev vpc are available
-#vpc_staging_stack.add_dependency(vpc_dev1_stack);
-#vpc_staging_stack.add_dependency(vpc_dev2_stack);
 
-#vpc_peer_stack1=CdkBlogVpcPeeringStack(app, id="cdk-blog-vpc-peer1", vpc=vpc_dev1_stack.vpc, peer_vpc=vpc_staging_stack.vpc, env=env_CA)
-#vpc_peer_stack2=CdkBlogVpcPeeringStack(app, id="cdk-blog-vpc-peer2", vpc=vpc_dev2_stack.vpc, peer_vpc=vpc_staging_stack.vpc, env=env_CA)
+vpc_peer_stack1=CdkBlogVpcPeeringStack(app, id="cdk-blog-vpc-peer1", vpc_cidr=vpc_dev1_stack.next_cidr_range,vpc=vpc_dev1_stack.vpc,peer_vpc_cidr=vpc_staging_stack.next_cidr_range,peer_vpc=vpc_staging_stack.vpc, env=env_CA)
+vpc_peer_stack2=CdkBlogVpcPeeringStack(app, id="cdk-blog-vpc-peer2", vpc_cidr=vpc_dev1_stack.next_cidr_range ,vpc=vpc_dev2_stack.vpc,peer_vpc_cidr=vpc_staging_stack.next_cidr_range, peer_vpc=vpc_staging_stack.vpc, env=env_CA)
 
 # staging vpc required
-#vpc_peer_stack1.add_dependency(vpc_staging_stack);
-#vpc_peer_stack2.add_dependency(vpc_peer_stack1);
-#my_custom_resource.add_dependency(vpc_peer_stack2);
+vpc_peer_stack1.add_dependency(vpc_staging_stack);
+vpc_peer_stack1.add_dependency(vpc_dev1_stack);
+
+vpc_peer_stack2.add_dependency(vpc_staging_stack);
+vpc_peer_stack2.add_dependency(vpc_dev2_stack);
+
+my_custom_resource.add_dependency(vpc_peer_stack2);
+my_custom_resource.add_dependency(vpc_peer_stack1);
+
+
+
 
 app.synth()
 

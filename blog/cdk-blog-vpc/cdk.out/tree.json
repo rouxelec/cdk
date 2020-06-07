@@ -361,13 +361,13 @@
               }
             }
           },
-          "SingletonLambdab87ff276a80111ea9505129b54026e4d": {
-            "id": "SingletonLambdab87ff276a80111ea9505129b54026e4d",
-            "path": "cdk-blog-custom-resource2/SingletonLambdab87ff276a80111ea9505129b54026e4d",
+          "SingletonLambda26d7eebaa86411eab001129b54026e4d": {
+            "id": "SingletonLambda26d7eebaa86411eab001129b54026e4d",
+            "path": "cdk-blog-custom-resource2/SingletonLambda26d7eebaa86411eab001129b54026e4d",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "cdk-blog-custom-resource2/SingletonLambdab87ff276a80111ea9505129b54026e4d/Resource",
+                "path": "cdk-blog-custom-resource2/SingletonLambda26d7eebaa86411eab001129b54026e4d/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
@@ -394,17 +394,17 @@
           }
         }
       },
-      "cdk-blog-ec2": {
-        "id": "cdk-blog-ec2",
-        "path": "cdk-blog-ec2",
+      "cdk-blog-vpc1-ec2": {
+        "id": "cdk-blog-vpc1-ec2",
+        "path": "cdk-blog-vpc1-ec2",
         "children": {
           "Role_ec2": {
             "id": "Role_ec2",
-            "path": "cdk-blog-ec2/Role_ec2",
+            "path": "cdk-blog-vpc1-ec2/Role_ec2",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "cdk-blog-ec2/Role_ec2/Resource",
+                "path": "cdk-blog-vpc1-ec2/Role_ec2/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::IAM::Role",
                   "aws:cdk:cloudformation:props": {
@@ -425,11 +425,11 @@
               },
               "DefaultPolicy": {
                 "id": "DefaultPolicy",
-                "path": "cdk-blog-ec2/Role_ec2/DefaultPolicy",
+                "path": "cdk-blog-vpc1-ec2/Role_ec2/DefaultPolicy",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "cdk-blog-ec2/Role_ec2/DefaultPolicy/Resource",
+                    "path": "cdk-blog-vpc1-ec2/Role_ec2/DefaultPolicy/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
                       "aws:cdk:cloudformation:props": {
@@ -462,11 +462,11 @@
           },
           "SecurityGroup": {
             "id": "SecurityGroup",
-            "path": "cdk-blog-ec2/SecurityGroup",
+            "path": "cdk-blog-vpc1-ec2/SecurityGroup",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "cdk-blog-ec2/SecurityGroup/Resource",
+                "path": "cdk-blog-vpc1-ec2/SecurityGroup/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
                   "aws:cdk:cloudformation:props": {
@@ -480,7 +480,7 @@
                     ],
                     "securityGroupIngress": [
                       {
-                        "cidrIp": "0.0.0.0/0",
+                        "cidrIp": "10.0.0.0/8",
                         "ipProtocol": "icmp",
                         "fromPort": 8,
                         "toPort": -1,
@@ -497,19 +497,19 @@
           },
           "Instance": {
             "id": "Instance",
-            "path": "cdk-blog-ec2/Instance",
+            "path": "cdk-blog-vpc1-ec2/Instance",
             "children": {
               "InstanceSecurityGroup": {
                 "id": "InstanceSecurityGroup",
-                "path": "cdk-blog-ec2/Instance/InstanceSecurityGroup",
+                "path": "cdk-blog-vpc1-ec2/Instance/InstanceSecurityGroup",
                 "children": {
                   "Resource": {
                     "id": "Resource",
-                    "path": "cdk-blog-ec2/Instance/InstanceSecurityGroup/Resource",
+                    "path": "cdk-blog-vpc1-ec2/Instance/InstanceSecurityGroup/Resource",
                     "attributes": {
                       "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
                       "aws:cdk:cloudformation:props": {
-                        "groupDescription": "cdk-blog-ec2/Instance/InstanceSecurityGroup",
+                        "groupDescription": "cdk-blog-vpc1-ec2/Instance/InstanceSecurityGroup",
                         "securityGroupEgress": [
                           {
                             "cidrIp": "0.0.0.0/0",
@@ -520,7 +520,7 @@
                         "tags": [
                           {
                             "key": "Name",
-                            "value": "cdk-blog-ec2/Instance"
+                            "value": "cdk-blog-vpc1-ec2/Instance"
                           }
                         ],
                         "vpcId": {
@@ -533,7 +533,7 @@
               },
               "InstanceProfile": {
                 "id": "InstanceProfile",
-                "path": "cdk-blog-ec2/Instance/InstanceProfile",
+                "path": "cdk-blog-vpc1-ec2/Instance/InstanceProfile",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::IAM::InstanceProfile",
                   "aws:cdk:cloudformation:props": {
@@ -547,7 +547,7 @@
               },
               "Resource": {
                 "id": "Resource",
-                "path": "cdk-blog-ec2/Instance/Resource",
+                "path": "cdk-blog-vpc1-ec2/Instance/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::Instance",
                   "aws:cdk:cloudformation:props": {
@@ -587,7 +587,7 @@
                     "tags": [
                       {
                         "key": "Name",
-                        "value": "cdk-blog-ec2/Instance"
+                        "value": "cdk-blog-vpc1-ec2/Instance"
                       }
                     ],
                     "userData": {
@@ -600,11 +600,1011 @@
           },
           "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": {
             "id": "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
-            "path": "cdk-blog-ec2/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter"
+            "path": "cdk-blog-vpc1-ec2/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter"
           },
           "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118": {
             "id": "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118",
-            "path": "cdk-blog-ec2/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118"
+            "path": "cdk-blog-vpc1-ec2/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118"
+          }
+        }
+      },
+      "cdk-blog-vpc-dev2": {
+        "id": "cdk-blog-vpc-dev2",
+        "path": "cdk-blog-vpc-dev2",
+        "children": {
+          "vpc-dev2": {
+            "id": "vpc-dev2",
+            "path": "cdk-blog-vpc-dev2/vpc-dev2",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-blog-vpc-dev2/vpc-dev2/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::VPC",
+                  "aws:cdk:cloudformation:props": {
+                    "cidrBlock": "10.73.0.0/16",
+                    "enableDnsHostnames": true,
+                    "enableDnsSupport": true,
+                    "instanceTenancy": "default",
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "cdk-blog-vpc-dev2/vpc-dev2"
+                      }
+                    ]
+                  }
+                }
+              },
+              "IngressSubnet1": {
+                "id": "IngressSubnet1",
+                "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "cidrBlock": "10.73.0.0/24",
+                        "vpcId": {
+                          "Ref": "vpcdev2A6F85476"
+                        },
+                        "availabilityZone": {
+                          "Fn::Select": [
+                            0,
+                            {
+                              "Fn::GetAZs": ""
+                            }
+                          ]
+                        },
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Ingress"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1/Acl"
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "vpcId": {
+                          "Ref": "vpcdev2A6F85476"
+                        },
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcdev2IngressSubnet1RouteTable0B7DBFD1"
+                        },
+                        "subnetId": {
+                          "Ref": "vpcdev2IngressSubnet1Subnet423F170D"
+                        }
+                      }
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet1/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcdev2IngressSubnet1RouteTable0B7DBFD1"
+                        },
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "vpcdev2IGW5BAB27B0"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "IngressSubnet2": {
+                "id": "IngressSubnet2",
+                "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "cidrBlock": "10.73.1.0/24",
+                        "vpcId": {
+                          "Ref": "vpcdev2A6F85476"
+                        },
+                        "availabilityZone": {
+                          "Fn::Select": [
+                            1,
+                            {
+                              "Fn::GetAZs": ""
+                            }
+                          ]
+                        },
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Ingress"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2/Acl"
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "vpcId": {
+                          "Ref": "vpcdev2A6F85476"
+                        },
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcdev2IngressSubnet2RouteTable0E21D54D"
+                        },
+                        "subnetId": {
+                          "Ref": "vpcdev2IngressSubnet2Subnet99425F42"
+                        }
+                      }
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet2/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcdev2IngressSubnet2RouteTable0E21D54D"
+                        },
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "vpcdev2IGW5BAB27B0"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "IGW": {
+                "id": "IGW",
+                "path": "cdk-blog-vpc-dev2/vpc-dev2/IGW",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::InternetGateway",
+                  "aws:cdk:cloudformation:props": {
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "cdk-blog-vpc-dev2/vpc-dev2"
+                      }
+                    ]
+                  }
+                }
+              },
+              "VPCGW": {
+                "id": "VPCGW",
+                "path": "cdk-blog-vpc-dev2/vpc-dev2/VPCGW",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::VPCGatewayAttachment",
+                  "aws:cdk:cloudformation:props": {
+                    "vpcId": {
+                      "Ref": "vpcdev2A6F85476"
+                    },
+                    "internetGatewayId": {
+                      "Ref": "vpcdev2IGW5BAB27B0"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "Exports": {
+            "id": "Exports",
+            "path": "cdk-blog-vpc-dev2/Exports",
+            "children": {
+              "Output{\"Ref\":\"vpcdev2A6F85476\"}": {
+                "id": "Output{\"Ref\":\"vpcdev2A6F85476\"}",
+                "path": "cdk-blog-vpc-dev2/Exports/Output{\"Ref\":\"vpcdev2A6F85476\"}"
+              },
+              "Output{\"Ref\":\"vpcdev2IngressSubnet1Subnet423F170D\"}": {
+                "id": "Output{\"Ref\":\"vpcdev2IngressSubnet1Subnet423F170D\"}",
+                "path": "cdk-blog-vpc-dev2/Exports/Output{\"Ref\":\"vpcdev2IngressSubnet1Subnet423F170D\"}"
+              }
+            }
+          }
+        }
+      },
+      "cdk-blog-vcp2-ec2": {
+        "id": "cdk-blog-vcp2-ec2",
+        "path": "cdk-blog-vcp2-ec2",
+        "children": {
+          "Role_ec2": {
+            "id": "Role_ec2",
+            "path": "cdk-blog-vcp2-ec2/Role_ec2",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-blog-vcp2-ec2/Role_ec2/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "ec2.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    }
+                  }
+                }
+              },
+              "DefaultPolicy": {
+                "id": "DefaultPolicy",
+                "path": "cdk-blog-vcp2-ec2/Role_ec2/DefaultPolicy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "cdk-blog-vcp2-ec2/Role_ec2/DefaultPolicy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                      "aws:cdk:cloudformation:props": {
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": [
+                                "dynamodb:Scan",
+                                "dynamodb:PutItem",
+                                "dynamodb:UpdateItem"
+                              ],
+                              "Effect": "Allow",
+                              "Resource": "*"
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "policyName": "Roleec2DefaultPolicy955B85A0",
+                        "roles": [
+                          {
+                            "Ref": "Roleec202EC015F"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "SecurityGroup": {
+            "id": "SecurityGroup",
+            "path": "cdk-blog-vcp2-ec2/SecurityGroup",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-blog-vcp2-ec2/SecurityGroup/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "groupDescription": "Allow ping",
+                    "securityGroupEgress": [
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "description": "Allow all outbound traffic by default",
+                        "ipProtocol": "-1"
+                      }
+                    ],
+                    "securityGroupIngress": [
+                      {
+                        "cidrIp": "10.0.0.0/8",
+                        "ipProtocol": "icmp",
+                        "fromPort": 8,
+                        "toPort": -1,
+                        "description": "allow ssh access from the world"
+                      }
+                    ],
+                    "vpcId": {
+                      "Fn::ImportValue": "cdk-blog-vpc-dev2:ExportsOutputRefvpcdev2A6F854763501C19D"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "Instance": {
+            "id": "Instance",
+            "path": "cdk-blog-vcp2-ec2/Instance",
+            "children": {
+              "InstanceSecurityGroup": {
+                "id": "InstanceSecurityGroup",
+                "path": "cdk-blog-vcp2-ec2/Instance/InstanceSecurityGroup",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "cdk-blog-vcp2-ec2/Instance/InstanceSecurityGroup/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                      "aws:cdk:cloudformation:props": {
+                        "groupDescription": "cdk-blog-vcp2-ec2/Instance/InstanceSecurityGroup",
+                        "securityGroupEgress": [
+                          {
+                            "cidrIp": "0.0.0.0/0",
+                            "description": "Allow all outbound traffic by default",
+                            "ipProtocol": "-1"
+                          }
+                        ],
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vcp2-ec2/Instance"
+                          }
+                        ],
+                        "vpcId": {
+                          "Fn::ImportValue": "cdk-blog-vpc-dev2:ExportsOutputRefvpcdev2A6F854763501C19D"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "InstanceProfile": {
+                "id": "InstanceProfile",
+                "path": "cdk-blog-vcp2-ec2/Instance/InstanceProfile",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::InstanceProfile",
+                  "aws:cdk:cloudformation:props": {
+                    "roles": [
+                      {
+                        "Ref": "Roleec202EC015F"
+                      }
+                    ]
+                  }
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-blog-vcp2-ec2/Instance/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::Instance",
+                  "aws:cdk:cloudformation:props": {
+                    "availabilityZone": {
+                      "Fn::Select": [
+                        0,
+                        {
+                          "Fn::GetAZs": ""
+                        }
+                      ]
+                    },
+                    "iamInstanceProfile": {
+                      "Ref": "InstanceInstanceProfileAB5AEF02"
+                    },
+                    "imageId": {
+                      "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
+                    },
+                    "instanceType": "t2.micro",
+                    "keyName": "test-ec2",
+                    "securityGroupIds": [
+                      {
+                        "Fn::GetAtt": [
+                          "InstanceInstanceSecurityGroupF0E2D5BE",
+                          "GroupId"
+                        ]
+                      },
+                      {
+                        "Fn::GetAtt": [
+                          "SecurityGroupDD263621",
+                          "GroupId"
+                        ]
+                      }
+                    ],
+                    "subnetId": {
+                      "Fn::ImportValue": "cdk-blog-vpc-dev2:ExportsOutputRefvpcdev2IngressSubnet1Subnet423F170D50FA36F5"
+                    },
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "cdk-blog-vcp2-ec2/Instance"
+                      }
+                    ],
+                    "userData": {
+                      "Fn::Base64": "#!/bin/bash\nyum update -y\nyum install python3 -y\nyum install git -y\npip3 install boto3\ngit clone https://github.com/rouxelec/ec2_user_data.git\necho \"* * * * * python3 /ec2_user_data/userdata.py\" >> /tmp/montest\ncrontab /tmp/montest"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": {
+            "id": "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "path": "cdk-blog-vcp2-ec2/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter"
+          },
+          "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118": {
+            "id": "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "path": "cdk-blog-vcp2-ec2/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118"
+          }
+        }
+      },
+      "cdk-blog-vpc-staging": {
+        "id": "cdk-blog-vpc-staging",
+        "path": "cdk-blog-vpc-staging",
+        "children": {
+          "vpc-staging": {
+            "id": "vpc-staging",
+            "path": "cdk-blog-vpc-staging/vpc-staging",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-blog-vpc-staging/vpc-staging/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::VPC",
+                  "aws:cdk:cloudformation:props": {
+                    "cidrBlock": "10.74.0.0/16",
+                    "enableDnsHostnames": true,
+                    "enableDnsSupport": true,
+                    "instanceTenancy": "default",
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "cdk-blog-vpc-staging/vpc-staging"
+                      }
+                    ]
+                  }
+                }
+              },
+              "IngressSubnet1": {
+                "id": "IngressSubnet1",
+                "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "cidrBlock": "10.74.0.0/24",
+                        "vpcId": {
+                          "Ref": "vpcstagingF0BF23A4"
+                        },
+                        "availabilityZone": {
+                          "Fn::Select": [
+                            0,
+                            {
+                              "Fn::GetAZs": ""
+                            }
+                          ]
+                        },
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Ingress"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1/Acl"
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "vpcId": {
+                          "Ref": "vpcstagingF0BF23A4"
+                        },
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcstagingIngressSubnet1RouteTableFD76C638"
+                        },
+                        "subnetId": {
+                          "Ref": "vpcstagingIngressSubnet1Subnet9C6D6AEE"
+                        }
+                      }
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet1/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcstagingIngressSubnet1RouteTableFD76C638"
+                        },
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "vpcstagingIGW6EB96F69"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "IngressSubnet2": {
+                "id": "IngressSubnet2",
+                "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "cidrBlock": "10.74.1.0/24",
+                        "vpcId": {
+                          "Ref": "vpcstagingF0BF23A4"
+                        },
+                        "availabilityZone": {
+                          "Fn::Select": [
+                            1,
+                            {
+                              "Fn::GetAZs": ""
+                            }
+                          ]
+                        },
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Ingress"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2/Acl"
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "vpcId": {
+                          "Ref": "vpcstagingF0BF23A4"
+                        },
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcstagingIngressSubnet2RouteTableC9A72AF9"
+                        },
+                        "subnetId": {
+                          "Ref": "vpcstagingIngressSubnet2SubnetE7A9F880"
+                        }
+                      }
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet2/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcstagingIngressSubnet2RouteTableC9A72AF9"
+                        },
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "vpcstagingIGW6EB96F69"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "IGW": {
+                "id": "IGW",
+                "path": "cdk-blog-vpc-staging/vpc-staging/IGW",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::InternetGateway",
+                  "aws:cdk:cloudformation:props": {
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "cdk-blog-vpc-staging/vpc-staging"
+                      }
+                    ]
+                  }
+                }
+              },
+              "VPCGW": {
+                "id": "VPCGW",
+                "path": "cdk-blog-vpc-staging/vpc-staging/VPCGW",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::VPCGatewayAttachment",
+                  "aws:cdk:cloudformation:props": {
+                    "vpcId": {
+                      "Ref": "vpcstagingF0BF23A4"
+                    },
+                    "internetGatewayId": {
+                      "Ref": "vpcstagingIGW6EB96F69"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "Exports": {
+            "id": "Exports",
+            "path": "cdk-blog-vpc-staging/Exports",
+            "children": {
+              "Output{\"Ref\":\"vpcstagingF0BF23A4\"}": {
+                "id": "Output{\"Ref\":\"vpcstagingF0BF23A4\"}",
+                "path": "cdk-blog-vpc-staging/Exports/Output{\"Ref\":\"vpcstagingF0BF23A4\"}"
+              },
+              "Output{\"Ref\":\"vpcstagingIngressSubnet1Subnet9C6D6AEE\"}": {
+                "id": "Output{\"Ref\":\"vpcstagingIngressSubnet1Subnet9C6D6AEE\"}",
+                "path": "cdk-blog-vpc-staging/Exports/Output{\"Ref\":\"vpcstagingIngressSubnet1Subnet9C6D6AEE\"}"
+              }
+            }
+          }
+        }
+      },
+      "cdk-blog-vpc-staging-ec2": {
+        "id": "cdk-blog-vpc-staging-ec2",
+        "path": "cdk-blog-vpc-staging-ec2",
+        "children": {
+          "Role_ec2": {
+            "id": "Role_ec2",
+            "path": "cdk-blog-vpc-staging-ec2/Role_ec2",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-blog-vpc-staging-ec2/Role_ec2/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "ec2.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    }
+                  }
+                }
+              },
+              "DefaultPolicy": {
+                "id": "DefaultPolicy",
+                "path": "cdk-blog-vpc-staging-ec2/Role_ec2/DefaultPolicy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "cdk-blog-vpc-staging-ec2/Role_ec2/DefaultPolicy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                      "aws:cdk:cloudformation:props": {
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": [
+                                "dynamodb:Scan",
+                                "dynamodb:PutItem",
+                                "dynamodb:UpdateItem"
+                              ],
+                              "Effect": "Allow",
+                              "Resource": "*"
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "policyName": "Roleec2DefaultPolicy955B85A0",
+                        "roles": [
+                          {
+                            "Ref": "Roleec202EC015F"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "SecurityGroup": {
+            "id": "SecurityGroup",
+            "path": "cdk-blog-vpc-staging-ec2/SecurityGroup",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-blog-vpc-staging-ec2/SecurityGroup/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "groupDescription": "Allow ping",
+                    "securityGroupEgress": [
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "description": "Allow all outbound traffic by default",
+                        "ipProtocol": "-1"
+                      }
+                    ],
+                    "securityGroupIngress": [
+                      {
+                        "cidrIp": "10.0.0.0/8",
+                        "ipProtocol": "icmp",
+                        "fromPort": 8,
+                        "toPort": -1,
+                        "description": "allow ssh access from the world"
+                      }
+                    ],
+                    "vpcId": {
+                      "Fn::ImportValue": "cdk-blog-vpc-staging:ExportsOutputRefvpcstagingF0BF23A463A94C5D"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "Instance": {
+            "id": "Instance",
+            "path": "cdk-blog-vpc-staging-ec2/Instance",
+            "children": {
+              "InstanceSecurityGroup": {
+                "id": "InstanceSecurityGroup",
+                "path": "cdk-blog-vpc-staging-ec2/Instance/InstanceSecurityGroup",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "cdk-blog-vpc-staging-ec2/Instance/InstanceSecurityGroup/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                      "aws:cdk:cloudformation:props": {
+                        "groupDescription": "cdk-blog-vpc-staging-ec2/Instance/InstanceSecurityGroup",
+                        "securityGroupEgress": [
+                          {
+                            "cidrIp": "0.0.0.0/0",
+                            "description": "Allow all outbound traffic by default",
+                            "ipProtocol": "-1"
+                          }
+                        ],
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-staging-ec2/Instance"
+                          }
+                        ],
+                        "vpcId": {
+                          "Fn::ImportValue": "cdk-blog-vpc-staging:ExportsOutputRefvpcstagingF0BF23A463A94C5D"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "InstanceProfile": {
+                "id": "InstanceProfile",
+                "path": "cdk-blog-vpc-staging-ec2/Instance/InstanceProfile",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::InstanceProfile",
+                  "aws:cdk:cloudformation:props": {
+                    "roles": [
+                      {
+                        "Ref": "Roleec202EC015F"
+                      }
+                    ]
+                  }
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "cdk-blog-vpc-staging-ec2/Instance/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::Instance",
+                  "aws:cdk:cloudformation:props": {
+                    "availabilityZone": {
+                      "Fn::Select": [
+                        0,
+                        {
+                          "Fn::GetAZs": ""
+                        }
+                      ]
+                    },
+                    "iamInstanceProfile": {
+                      "Ref": "InstanceInstanceProfileAB5AEF02"
+                    },
+                    "imageId": {
+                      "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
+                    },
+                    "instanceType": "t2.micro",
+                    "keyName": "test-ec2",
+                    "securityGroupIds": [
+                      {
+                        "Fn::GetAtt": [
+                          "InstanceInstanceSecurityGroupF0E2D5BE",
+                          "GroupId"
+                        ]
+                      },
+                      {
+                        "Fn::GetAtt": [
+                          "SecurityGroupDD263621",
+                          "GroupId"
+                        ]
+                      }
+                    ],
+                    "subnetId": {
+                      "Fn::ImportValue": "cdk-blog-vpc-staging:ExportsOutputRefvpcstagingIngressSubnet1Subnet9C6D6AEE8DE04E30"
+                    },
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "cdk-blog-vpc-staging-ec2/Instance"
+                      }
+                    ],
+                    "userData": {
+                      "Fn::Base64": "#!/bin/bash\nyum update -y\nyum install python3 -y\nyum install git -y\npip3 install boto3\ngit clone https://github.com/rouxelec/ec2_user_data.git\necho \"* * * * * python3 /ec2_user_data/userdata.py\" >> /tmp/montest\ncrontab /tmp/montest"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": {
+            "id": "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "path": "cdk-blog-vpc-staging-ec2/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter"
+          },
+          "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118": {
+            "id": "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "path": "cdk-blog-vpc-staging-ec2/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118"
+          }
+        }
+      },
+      "cdk-blog-vpc-peer1": {
+        "id": "cdk-blog-vpc-peer1",
+        "path": "cdk-blog-vpc-peer1",
+        "children": {
+          "vpc_peering_connection": {
+            "id": "vpc_peering_connection",
+            "path": "cdk-blog-vpc-peer1/vpc_peering_connection",
+            "attributes": {
+              "aws:cdk:cloudformation:type": "AWS::EC2::VPCPeeringConnection",
+              "aws:cdk:cloudformation:props": {
+                "peerVpcId": {
+                  "Fn::ImportValue": "cdk-blog-vpc-staging:ExportsOutputRefvpcstagingF0BF23A463A94C5D"
+                },
+                "vpcId": {
+                  "Fn::ImportValue": "cdk-blog-vpc-dev1:ExportsOutputRefvpcdev122B8E28D3296F345"
+                }
+              }
+            }
+          }
+        }
+      },
+      "cdk-blog-vpc-peer2": {
+        "id": "cdk-blog-vpc-peer2",
+        "path": "cdk-blog-vpc-peer2",
+        "children": {
+          "vpc_peering_connection": {
+            "id": "vpc_peering_connection",
+            "path": "cdk-blog-vpc-peer2/vpc_peering_connection",
+            "attributes": {
+              "aws:cdk:cloudformation:type": "AWS::EC2::VPCPeeringConnection",
+              "aws:cdk:cloudformation:props": {
+                "peerVpcId": {
+                  "Fn::ImportValue": "cdk-blog-vpc-staging:ExportsOutputRefvpcstagingF0BF23A463A94C5D"
+                },
+                "vpcId": {
+                  "Fn::ImportValue": "cdk-blog-vpc-dev2:ExportsOutputRefvpcdev2A6F854763501C19D"
+                }
+              }
+            }
           }
         }
       }

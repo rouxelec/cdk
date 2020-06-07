@@ -223,6 +223,14 @@
       "Export": {
         "Name": "cdk-blog-vpc-staging:ExportsOutputRefvpcstagingF0BF23A463A94C5D"
       }
+    },
+    "ExportsOutputRefvpcstagingIngressSubnet1Subnet9C6D6AEE8DE04E30": {
+      "Value": {
+        "Ref": "vpcstagingIngressSubnet1Subnet9C6D6AEE"
+      },
+      "Export": {
+        "Name": "cdk-blog-vpc-staging:ExportsOutputRefvpcstagingIngressSubnet1Subnet9C6D6AEE8DE04E30"
+      }
     }
   }
 }

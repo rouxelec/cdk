@@ -1,6 +1,6 @@
 {
   "Resources": {
-    "test": {
+    "vpcpeeringconnection": {
       "Type": "AWS::EC2::VPCPeeringConnection",
       "Properties": {
         "PeerVpcId": {
@@ -11,7 +11,7 @@
         }
       },
       "Metadata": {
-        "aws:cdk:path": "cdk-blog-vpc-peer2/test"
+        "aws:cdk:path": "cdk-blog-vpc-peer2/vpc_peering_connection"
       }
     }
   }
