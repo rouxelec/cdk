@@ -6,8 +6,6 @@ import cfnresponse
 
 log.getLogger().setLevel(log.INFO)
 
-# This needs to change if there are to be multiple resources
-# in the same stack
 physical_id = 'TheOnlyCustomResource'
 
 ec2 = boto3.resource('ec2', region_name='ca-central-1')
@@ -18,36 +16,26 @@ cidr_range_table = dynamodb.Table('cidr_range_table')
 def lambda_handler(event, context):
     try:
         log.info('Input event: %s', event)
-
-        # Check if this is a Create and we're failing Creates
         if event['RequestType'] == 'Create' and event['ResourceProperties'].get('FailCreate', False):
             raise RuntimeError('Create failure requested')
 
-        # Do the thing
         message = event['ResourceProperties']['Message']
         attributes = {
             'Response': 'You said "%s"' % message
         }
-    
         update_dynamo()
-
         cfnresponse.send(event, context, cfnresponse.SUCCESS,
                          attributes, physical_id)
     except Exception as e:
         log.exception(e)
-        # cfnresponse's error message is always "see CloudWatch"
         cfnresponse.send(event, context, cfnresponse.FAILED, {}, physical_id)
 
 def update_dynamo():
-
     filters = []
     vpcs = list(ec2.vpcs.filter(Filters=filters))
-    
     for vpc in vpcs:
         response = client.describe_vpcs(
-        VpcIds=[
-            vpc.id,
-            ]
+        VpcIds=[vpc.id]
         )
         my_json=json.dumps(response, sort_keys=True, indent=4)    
         for subnet in vpc.subnets.all():
@@ -64,27 +52,48 @@ def update_dynamo():
                                 'component_type' : "Subnet",
                                 'subnet_id': subnet.subnet_id
                         })          
-                        
-        
-        private_ip_address='test'
+        priv_ip_add='t'
         for instance in vpc.instances.all():
-            print('test')
-            print(instance.private_ip_address)
-            private_ip_address=instance.private_ip_address
+            priv_ip_add=instance.private_ip_address
     
         vpc_name='test'
-        if not response['Vpcs'][0].get('Tags') is None:
-            for tag in response['Vpcs'][0].get('Tags'):
+        vpc_resp=response['Vpcs'][0]
+        if not vpc_resp.get('Tags') is None:
+            for tag in vpc_resp.get('Tags'):
                 if tag['Key']=='Name':  
                     vpc_name=tag['Value']
-                    response_cidr_range_table = cidr_range_table.put_item(
+                    cidr_range_table.put_item(
                     Item={
                         'id': vpc_name,
-                        'cidr_range': response['Vpcs'][0]['CidrBlock'],
-                        'vpc_id' : response['Vpcs'][0]['VpcId'],
+                        'cidr_range': vpc_resp['CidrBlock'],
+                        'vpc_id' : vpc_resp['VpcId'],
                         'component_type' : "VPC",
-                        'ec2_ip_address' : private_ip_address
+                        'ec2_ip_address' : priv_ip_add
                         }
                     )
-                      
-           
+        response = client.describe_vpc_peering_connections(
+            Filters=[]
+        )
+            
+        vpcPeeringCs=response['VpcPeeringConnections']
+        for vpcPeeringConn in vpcPeeringCs:
+            cidr_accepter=vpcPeeringConn.get('AccepterVpcInfo').get('CidrBlock')
+            cidr_requester=vpcPeeringConn.get('RequesterVpcInfo').get('CidrBlock')
+            vpcPConnId=vpcPeeringConn.get('VpcPeeringConnectionId')
+            status=vpcPeeringConn.get('Status').get("Code")
+            
+            if status=="active":
+                for route_table in vpc.route_tables.all():
+                    for asso_att in route_table.associations_attribute:
+                        if asso_att.get('Main'):
+                            if vpc.cidr_block==cidr_accepter:
+                                route_table.create_route(
+                                    DestinationCidrBlock=cidr_requester,
+                                    VpcPeeringConnectionId=vpcPConnId
+                                )
+                            if vpc.cidr_block==cidr_requester:
+                                route_table.create_route(
+                                    DestinationCidrBlock=cidr_accepter,
+                                    VpcPeeringConnectionId=vpcPConnId
+                                )    
+       

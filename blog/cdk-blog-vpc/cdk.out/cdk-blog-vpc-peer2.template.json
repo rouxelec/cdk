@@ -8,7 +8,25 @@
         },
         "VpcId": {
           "Fn::ImportValue": "cdk-blog-vpc-dev2:ExportsOutputRefvpcdev2A6F854763501C19D"
-        }
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Fn::ImportValue": "cdk-blog-vpc-dev2:ExportsOutputRefvpcdev2A6F854763501C19D"
+                  },
+                  {
+                    "Fn::ImportValue": "cdk-blog-vpc-staging:ExportsOutputRefvpcstagingF0BF23A463A94C5D"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
       },
       "Metadata": {
         "aws:cdk:path": "cdk-blog-vpc-peer2/vpc_peering_connection"

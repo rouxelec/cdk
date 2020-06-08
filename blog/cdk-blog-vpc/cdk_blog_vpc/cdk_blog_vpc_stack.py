@@ -109,6 +109,7 @@ class CdkBlogVpcStack(core.Stack):
             )
             ]
         )
+        self.vpc_id=self.vpc.vpc_id
         
 
 class CdkBlogMyCustomResourceStack(core.Stack):
@@ -142,7 +143,7 @@ class CdkBlogMyCustomResource(core.Construct):
         my_lambda_role.add_to_policy(iam.PolicyStatement(
             effect=iam.Effect.ALLOW,
             resources=["*"],
-            actions=["ec2:DescribeVpcs","ec2:DescribeInstances","ec2:DescribeInstanceAttribute","dynamodb:PutItem","ec2:DescribeSubnets"]
+            actions=["ec2:DescribeVpcs","ec2:DescribeInstances","ec2:DescribeInstanceAttribute","dynamodb:PutItem","ec2:DescribeSubnets","ec2:DescribeVpcPeeringConnections","ec2:DescribeRouteTables","ec2:CreateRoute","ec2:ReplaceRouteTableAssociation","ec2:CreateRouteTable","ec2:DisassociateRouteTable","ec2:AssociateRouteTable","ec2:DeleteRoute","ec2:ReplaceRoute","ec2:DeleteRouteTable"]
         ))
         
         _uuid=uuid.uuid1()
@@ -166,20 +167,28 @@ class CdkBlogMyCustomResource(core.Construct):
         
 
 class CdkBlogVpcPeeringStack(core.Stack):
-    def __init__(self, scope: core.Construct, id: str, vpc_cidr:str,vpc:ec2.Vpc,peer_vpc_cidr:str,peer_vpc:ec2.Vpc, **kwargs) -> None:
+    def __init__(self, scope: core.Construct, id: str, vpc_id1:str,vpc_id2:str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
-        vpc_peer=VPCPeeringConnection(self,'vpc_peering_connection', vpc_id=vpc.vpc_id, peer_vpc_id=peer_vpc.vpc_id)
-        #route_table=ec2.CfnRouteTable(self, id='route_table',vpc_id=vpc.vpc_id)
+        tag=core.CfnTag(key='Name',value=vpc_id1+vpc_id2)
+        self.vpc_peer=VPCPeeringConnection(self,'vpc_peering_connection', vpc_id=vpc_id1, peer_vpc_id=vpc_id2,tags=[tag])
+        self.vpc_peer_ref=self.vpc_peer.ref
+        #route_table=ec2.CfnRouteTable(self, id='route_table',vpc_id=vpc_id1)
         #print(route_table)
-        #ec2.CfnRoute(self,'route',route_table_id=route_table.route_table_id ,destination_cidr_block=peer_vpc.vpc_cidr_block ,vpc_peering_connection_id=id )
+        #ec2.CfnRoute(self,'route',route_table_id=route_table.ref ,destination_cidr_block='10.0.0.0/8' ,vpc_peering_connection_id=self.vpc_peer_ref )
+        
+
+
+class CdkBlogVpcRouteStack(core.Stack):
+    def __init__(self, scope: core.Construct, id: str, vpc_peer_ref:str,vpc:ec2.Vpc,peer_vpc:ec2.Vpc, **kwargs) -> None:
+        super().__init__(scope, id, **kwargs)
+        
         i=random.randint(1,10000)
         for subnet in vpc.public_subnets:
             i=random.randint(1,10000)
-            subnet.add_route('route'+str(i),router_id=vpc_peer.ref,destination_cidr_block =peer_vpc_cidr,router_type=ec2.RouterType.VPC_PEERING_CONNECTION)
+            subnet.add_route('route'+str(i),router_id=vpc_peer_ref,destination_cidr_block ='10.0.0.0/16',router_type=ec2.RouterType.VPC_PEERING_CONNECTION)
         for subnet in peer_vpc.public_subnets:
             i=random.randint(1,10000)
-            subnet.add_route('route'+str(i),router_id=vpc_peer.ref,destination_cidr_block =vpc_cidr,router_type=ec2.RouterType.VPC_PEERING_CONNECTION)
-
+            subnet.add_route('route'+str(i),router_id=vpc_peer_ref,destination_cidr_block ='10.0.0.0/16',router_type=ec2.RouterType.VPC_PEERING_CONNECTION)
         
         
 class EC2InstanceStack(core.Stack):
