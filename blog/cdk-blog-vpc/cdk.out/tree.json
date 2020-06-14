@@ -49,14 +49,7 @@
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
-                        "availabilityZone": {
-                          "Fn::Select": [
-                            0,
-                            {
-                              "Fn::GetAZs": ""
-                            }
-                          ]
-                        },
+                        "availabilityZone": "ca-central-1a",
                         "mapPublicIpOnLaunch": true,
                         "tags": [
                           {
@@ -144,14 +137,7 @@
                         "vpcId": {
                           "Ref": "vpcdev122B8E28D"
                         },
-                        "availabilityZone": {
-                          "Fn::Select": [
-                            1,
-                            {
-                              "Fn::GetAZs": ""
-                            }
-                          ]
-                        },
+                        "availabilityZone": "ca-central-1b",
                         "mapPublicIpOnLaunch": true,
                         "tags": [
                           {
@@ -215,6 +201,94 @@
                       "aws:cdk:cloudformation:props": {
                         "routeTableId": {
                           "Ref": "vpcdev1IngressSubnet2RouteTableEED9DF52"
+                        },
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "vpcdev1IGW6087D4EA"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "IngressSubnet3": {
+                "id": "IngressSubnet3",
+                "path": "cdk-blog-vpc-dev1/vpc-dev1/IngressSubnet3",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "cdk-blog-vpc-dev1/vpc-dev1/IngressSubnet3/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "cidrBlock": "10.72.2.0/24",
+                        "vpcId": {
+                          "Ref": "vpcdev122B8E28D"
+                        },
+                        "availabilityZone": "ca-central-1d",
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-dev1/vpc-dev1/IngressSubnet3"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Ingress"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "cdk-blog-vpc-dev1/vpc-dev1/IngressSubnet3/Acl"
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "cdk-blog-vpc-dev1/vpc-dev1/IngressSubnet3/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "vpcId": {
+                          "Ref": "vpcdev122B8E28D"
+                        },
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-dev1/vpc-dev1/IngressSubnet3"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "cdk-blog-vpc-dev1/vpc-dev1/IngressSubnet3/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcdev1IngressSubnet3RouteTable9B25011E"
+                        },
+                        "subnetId": {
+                          "Ref": "vpcdev1IngressSubnet3SubnetD1B8A775"
+                        }
+                      }
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "cdk-blog-vpc-dev1/vpc-dev1/IngressSubnet3/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcdev1IngressSubnet3RouteTable9B25011E"
                         },
                         "destinationCidrBlock": "0.0.0.0/0",
                         "gatewayId": {
@@ -430,14 +504,7 @@
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::Instance",
                   "aws:cdk:cloudformation:props": {
-                    "availabilityZone": {
-                      "Fn::Select": [
-                        0,
-                        {
-                          "Fn::GetAZs": ""
-                        }
-                      ]
-                    },
+                    "availabilityZone": "ca-central-1a",
                     "iamInstanceProfile": {
                       "Ref": "InstanceInstanceProfileAB5AEF02"
                     },
@@ -528,14 +595,7 @@
                         "vpcId": {
                           "Ref": "vpcdev2A6F85476"
                         },
-                        "availabilityZone": {
-                          "Fn::Select": [
-                            0,
-                            {
-                              "Fn::GetAZs": ""
-                            }
-                          ]
-                        },
+                        "availabilityZone": "ca-central-1a",
                         "mapPublicIpOnLaunch": true,
                         "tags": [
                           {
@@ -623,14 +683,7 @@
                         "vpcId": {
                           "Ref": "vpcdev2A6F85476"
                         },
-                        "availabilityZone": {
-                          "Fn::Select": [
-                            1,
-                            {
-                              "Fn::GetAZs": ""
-                            }
-                          ]
-                        },
+                        "availabilityZone": "ca-central-1b",
                         "mapPublicIpOnLaunch": true,
                         "tags": [
                           {
@@ -694,6 +747,94 @@
                       "aws:cdk:cloudformation:props": {
                         "routeTableId": {
                           "Ref": "vpcdev2IngressSubnet2RouteTable0E21D54D"
+                        },
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "vpcdev2IGW5BAB27B0"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "IngressSubnet3": {
+                "id": "IngressSubnet3",
+                "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "cidrBlock": "10.73.2.0/24",
+                        "vpcId": {
+                          "Ref": "vpcdev2A6F85476"
+                        },
+                        "availabilityZone": "ca-central-1d",
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Ingress"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3/Acl"
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "vpcId": {
+                          "Ref": "vpcdev2A6F85476"
+                        },
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcdev2IngressSubnet3RouteTable1828F426"
+                        },
+                        "subnetId": {
+                          "Ref": "vpcdev2IngressSubnet3Subnet10BCEB2F"
+                        }
+                      }
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "cdk-blog-vpc-dev2/vpc-dev2/IngressSubnet3/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcdev2IngressSubnet3RouteTable1828F426"
                         },
                         "destinationCidrBlock": "0.0.0.0/0",
                         "gatewayId": {
@@ -909,14 +1050,7 @@
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::Instance",
                   "aws:cdk:cloudformation:props": {
-                    "availabilityZone": {
-                      "Fn::Select": [
-                        0,
-                        {
-                          "Fn::GetAZs": ""
-                        }
-                      ]
-                    },
+                    "availabilityZone": "ca-central-1a",
                     "iamInstanceProfile": {
                       "Ref": "InstanceInstanceProfileAB5AEF02"
                     },
@@ -1007,14 +1141,7 @@
                         "vpcId": {
                           "Ref": "vpcstagingF0BF23A4"
                         },
-                        "availabilityZone": {
-                          "Fn::Select": [
-                            0,
-                            {
-                              "Fn::GetAZs": ""
-                            }
-                          ]
-                        },
+                        "availabilityZone": "ca-central-1a",
                         "mapPublicIpOnLaunch": true,
                         "tags": [
                           {
@@ -1102,14 +1229,7 @@
                         "vpcId": {
                           "Ref": "vpcstagingF0BF23A4"
                         },
-                        "availabilityZone": {
-                          "Fn::Select": [
-                            1,
-                            {
-                              "Fn::GetAZs": ""
-                            }
-                          ]
-                        },
+                        "availabilityZone": "ca-central-1b",
                         "mapPublicIpOnLaunch": true,
                         "tags": [
                           {
@@ -1173,6 +1293,94 @@
                       "aws:cdk:cloudformation:props": {
                         "routeTableId": {
                           "Ref": "vpcstagingIngressSubnet2RouteTableC9A72AF9"
+                        },
+                        "destinationCidrBlock": "0.0.0.0/0",
+                        "gatewayId": {
+                          "Ref": "vpcstagingIGW6EB96F69"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "IngressSubnet3": {
+                "id": "IngressSubnet3",
+                "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3",
+                "children": {
+                  "Subnet": {
+                    "id": "Subnet",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3/Subnet",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Subnet",
+                      "aws:cdk:cloudformation:props": {
+                        "cidrBlock": "10.74.2.0/24",
+                        "vpcId": {
+                          "Ref": "vpcstagingF0BF23A4"
+                        },
+                        "availabilityZone": "ca-central-1d",
+                        "mapPublicIpOnLaunch": true,
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-name",
+                            "value": "Ingress"
+                          },
+                          {
+                            "key": "aws-cdk:subnet-type",
+                            "value": "Public"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "Acl": {
+                    "id": "Acl",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3/Acl"
+                  },
+                  "RouteTable": {
+                    "id": "RouteTable",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3/RouteTable",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::RouteTable",
+                      "aws:cdk:cloudformation:props": {
+                        "vpcId": {
+                          "Ref": "vpcstagingF0BF23A4"
+                        },
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "RouteTableAssociation": {
+                    "id": "RouteTableAssociation",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3/RouteTableAssociation",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::SubnetRouteTableAssociation",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcstagingIngressSubnet3RouteTable0ED17CE6"
+                        },
+                        "subnetId": {
+                          "Ref": "vpcstagingIngressSubnet3SubnetDFF4155B"
+                        }
+                      }
+                    }
+                  },
+                  "DefaultRoute": {
+                    "id": "DefaultRoute",
+                    "path": "cdk-blog-vpc-staging/vpc-staging/IngressSubnet3/DefaultRoute",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::EC2::Route",
+                      "aws:cdk:cloudformation:props": {
+                        "routeTableId": {
+                          "Ref": "vpcstagingIngressSubnet3RouteTable0ED17CE6"
                         },
                         "destinationCidrBlock": "0.0.0.0/0",
                         "gatewayId": {
@@ -1388,14 +1596,7 @@
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::EC2::Instance",
                   "aws:cdk:cloudformation:props": {
-                    "availabilityZone": {
-                      "Fn::Select": [
-                        0,
-                        {
-                          "Fn::GetAZs": ""
-                        }
-                      ]
-                    },
+                    "availabilityZone": "ca-central-1a",
                     "iamInstanceProfile": {
                       "Ref": "InstanceInstanceProfileAB5AEF02"
                     },
@@ -1570,6 +1771,7 @@
                               "Statement": [
                                 {
                                   "Action": [
+                                    "logs:*",
                                     "ec2:DescribeVpcs",
                                     "ec2:DescribeInstances",
                                     "ec2:DescribeInstanceAttribute",
@@ -1621,18 +1823,18 @@
               }
             }
           },
-          "SingletonLambdaee1bce2aa92b11eaa0a6129b54026e4d": {
-            "id": "SingletonLambdaee1bce2aa92b11eaa0a6129b54026e4d",
-            "path": "cdk-blog-custom-resource2/SingletonLambdaee1bce2aa92b11eaa0a6129b54026e4d",
+          "SingletonLambda435b6ee0ae4511eab761129b54026e4d": {
+            "id": "SingletonLambda435b6ee0ae4511eab761129b54026e4d",
+            "path": "cdk-blog-custom-resource2/SingletonLambda435b6ee0ae4511eab761129b54026e4d",
             "children": {
               "Resource": {
                 "id": "Resource",
-                "path": "cdk-blog-custom-resource2/SingletonLambdaee1bce2aa92b11eaa0a6129b54026e4d/Resource",
+                "path": "cdk-blog-custom-resource2/SingletonLambda435b6ee0ae4511eab761129b54026e4d/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
-                      "zipFile": "import boto3\nimport time\nimport json\nimport logging as log\nimport cfnresponse\n\nlog.getLogger().setLevel(log.INFO)\n\nphysical_id = 'TheOnlyCustomResource'\n\nec2 = boto3.resource('ec2', region_name='ca-central-1')\nclient = boto3.client('ec2', region_name='ca-central-1')\ndynamodb = boto3.resource('dynamodb', region_name='ca-central-1')\ncidr_range_table = dynamodb.Table('cidr_range_table')\n\ndef lambda_handler(event, context):\n    try:\n        log.info('Input event: %s', event)\n        if event['RequestType'] == 'Create' and event['ResourceProperties'].get('FailCreate', False):\n            raise RuntimeError('Create failure requested')\n\n        message = event['ResourceProperties']['Message']\n        attributes = {\n            'Response': 'You said \"%s\"' % message\n        }\n        update_dynamo()\n        cfnresponse.send(event, context, cfnresponse.SUCCESS,\n                         attributes, physical_id)\n    except Exception as e:\n        log.exception(e)\n        cfnresponse.send(event, context, cfnresponse.FAILED, {}, physical_id)\n\ndef update_dynamo():\n    filters = []\n    vpcs = list(ec2.vpcs.filter(Filters=filters))\n    for vpc in vpcs:\n        response = client.describe_vpcs(\n        VpcIds=[vpc.id]\n        )\n        my_json=json.dumps(response, sort_keys=True, indent=4)    \n        for subnet in vpc.subnets.all():\n            subnet_name=''\n            if not subnet.tags==None:\n                for tag in subnet.tags:\n                    if tag['Key']==\"Name\":\n                        subnet_name=tag['Value']\n                        response_cidr_range_table = cidr_range_table.put_item(\n                            Item={\n                                'id': subnet_name,\n                                'cidr_range': subnet.cidr_block,\n                                'vpc_id' : subnet.vpc_id,\n                                'component_type' : \"Subnet\",\n                                'subnet_id': subnet.subnet_id\n                        })          \n        priv_ip_add='t'\n        for instance in vpc.instances.all():\n            priv_ip_add=instance.private_ip_address\n    \n        vpc_name='test'\n        vpc_resp=response['Vpcs'][0]\n        if not vpc_resp.get('Tags') is None:\n            for tag in vpc_resp.get('Tags'):\n                if tag['Key']=='Name':  \n                    vpc_name=tag['Value']\n                    cidr_range_table.put_item(\n                    Item={\n                        'id': vpc_name,\n                        'cidr_range': vpc_resp['CidrBlock'],\n                        'vpc_id' : vpc_resp['VpcId'],\n                        'component_type' : \"VPC\",\n                        'ec2_ip_address' : priv_ip_add\n                        }\n                    )\n        response = client.describe_vpc_peering_connections(\n            Filters=[]\n        )\n            \n        vpcPeeringCs=response['VpcPeeringConnections']\n        for vpcPeeringConn in vpcPeeringCs:\n            cidr_accepter=vpcPeeringConn.get('AccepterVpcInfo').get('CidrBlock')\n            cidr_requester=vpcPeeringConn.get('RequesterVpcInfo').get('CidrBlock')\n            vpcPConnId=vpcPeeringConn.get('VpcPeeringConnectionId')\n            status=vpcPeeringConn.get('Status').get(\"Code\")\n            \n            if status==\"active\":\n                for route_table in vpc.route_tables.all():\n                    for asso_att in route_table.associations_attribute:\n                        if asso_att.get('Main'):\n                            if vpc.cidr_block==cidr_accepter:\n                                route_table.create_route(\n                                    DestinationCidrBlock=cidr_requester,\n                                    VpcPeeringConnectionId=vpcPConnId\n                                )\n                            if vpc.cidr_block==cidr_requester:\n                                route_table.create_route(\n                                    DestinationCidrBlock=cidr_accepter,\n                                    VpcPeeringConnectionId=vpcPConnId\n                                )    \n       "
+                      "zipFile": "import boto3\nimport time\nimport json\nimport logging as log\nimport cfnresponse\n\nlog.getLogger().setLevel(log.INFO)\n\nphysical_id = 'TheOnlyCustomResource'\n\nec2 = boto3.resource('ec2', region_name='ca-central-1')\nclient = boto3.client('ec2', region_name='ca-central-1')\ndynamodb = boto3.resource('dynamodb', region_name='ca-central-1')\ncidr_range_table = dynamodb.Table('cidr_range_table')\n\ndef lambda_handler(event, context):\n    try:\n        log.info('Input event: %s', event)\n        if event['RequestType'] == 'Create' and event['ResourceProperties'].get('FailCreate', False):\n            raise RuntimeError('Create failure requested')\n\n        message = event['ResourceProperties']['Message']\n        attributes = {\n            'Response': 'You said \"%s\"' % message\n        }\n        if event['RequestType'] == 'Create':\n            update_dynamo()\n            \n        cfnresponse.send(event, context, cfnresponse.SUCCESS,\n                         attributes, physical_id)\n    except Exception as e:\n        log.exception(e)\n        cfnresponse.send(event, context, cfnresponse.FAILED, {}, physical_id)\n\ndef update_dynamo():\n    filters = []\n    vpcs = list(ec2.vpcs.filter(Filters=filters))\n    for vpc in vpcs:\n        response = client.describe_vpcs(\n        VpcIds=[vpc.id]\n        )\n        \n        for subnet in vpc.subnets.all():\n            subnet_name=''\n            if not subnet.tags==None:\n                for tag in subnet.tags:\n                    if tag['Key']==\"Name\":\n                        subnet_name=tag['Value']\n                        cidr_range_table.put_item(\n                            Item={\n                                'id': subnet_name,\n                                'cidr_range': subnet.cidr_block,\n                                'vpc_id' : subnet.vpc_id,\n                                'component_type' : \"Subnet\",\n                                'subnet_id': subnet.subnet_id\n                        })          \n        priv_ip_add='unknown'\n        for instance in vpc.instances.all():\n            priv_ip_add=instance.private_ip_address\n    \n        vpc_name='test'\n        vpc_resp=response['Vpcs'][0]\n        if not vpc_resp.get('Tags') is None:\n            for tag in vpc_resp.get('Tags'):\n                if tag['Key']=='Name':  \n                    vpc_name=tag['Value']\n                    cidr_range_table.put_item(\n                    Item={\n                        'id': vpc_name,\n                        'cidr_range': vpc_resp['CidrBlock'],\n                        'vpc_id' : vpc_resp['VpcId'],\n                        'component_type' : \"VPC\",\n                        'ec2_ip_address' : priv_ip_add\n                        }\n                    )\n        response = client.describe_vpc_peering_connections(\n            Filters=[]\n        )\n            \n        vpcPeeringCs=response['VpcPeeringConnections']\n        for vpcPeeringConn in vpcPeeringCs:\n            cidr_accepter=vpcPeeringConn.get('AccepterVpcInfo').get('CidrBlock')\n            cidr_requester=vpcPeeringConn.get('RequesterVpcInfo').get('CidrBlock')\n            vpcPConnId=vpcPeeringConn.get('VpcPeeringConnectionId')\n            \n            if vpcPeeringConn.get('Status').get(\"Code\")==\"active\":\n                for route_table in vpc.route_tables.all():\n                    for asso_att in route_table.associations_attribute:\n                        if not asso_att.get('Main'):\n                            if vpc.cidr_block==cidr_accepter:\n                                route_table.create_route(\n                                    DestinationCidrBlock=cidr_requester,\n                                    VpcPeeringConnectionId=vpcPConnId\n                                )\n                            if vpc.cidr_block==cidr_requester:\n                                route_table.create_route(\n                                    DestinationCidrBlock=cidr_accepter,\n                                    VpcPeeringConnectionId=vpcPConnId\n                                )    \n       "
                     },
                     "handler": "index.lambda_handler",
                     "role": {

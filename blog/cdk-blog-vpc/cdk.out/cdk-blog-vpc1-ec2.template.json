@@ -117,14 +117,7 @@
     "InstanceC1063A87": {
       "Type": "AWS::EC2::Instance",
       "Properties": {
-        "AvailabilityZone": {
-          "Fn::Select": [
-            0,
-            {
-              "Fn::GetAZs": ""
-            }
-          ]
-        },
+        "AvailabilityZone": "ca-central-1a",
         "IamInstanceProfile": {
           "Ref": "InstanceInstanceProfileAB5AEF02"
         },

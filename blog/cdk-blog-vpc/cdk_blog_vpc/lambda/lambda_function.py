@@ -23,7 +23,9 @@ def lambda_handler(event, context):
         attributes = {
             'Response': 'You said "%s"' % message
         }
-        update_dynamo()
+        if event['RequestType'] == 'Create':
+            update_dynamo()
+            
         cfnresponse.send(event, context, cfnresponse.SUCCESS,
                          attributes, physical_id)
     except Exception as e:
@@ -37,14 +39,14 @@ def update_dynamo():
         response = client.describe_vpcs(
         VpcIds=[vpc.id]
         )
-        my_json=json.dumps(response, sort_keys=True, indent=4)    
+        
         for subnet in vpc.subnets.all():
             subnet_name=''
             if not subnet.tags==None:
                 for tag in subnet.tags:
                     if tag['Key']=="Name":
                         subnet_name=tag['Value']
-                        response_cidr_range_table = cidr_range_table.put_item(
+                        cidr_range_table.put_item(
                             Item={
                                 'id': subnet_name,
                                 'cidr_range': subnet.cidr_block,
@@ -52,7 +54,7 @@ def update_dynamo():
                                 'component_type' : "Subnet",
                                 'subnet_id': subnet.subnet_id
                         })          
-        priv_ip_add='t'
+        priv_ip_add='unknown'
         for instance in vpc.instances.all():
             priv_ip_add=instance.private_ip_address
     
@@ -80,12 +82,11 @@ def update_dynamo():
             cidr_accepter=vpcPeeringConn.get('AccepterVpcInfo').get('CidrBlock')
             cidr_requester=vpcPeeringConn.get('RequesterVpcInfo').get('CidrBlock')
             vpcPConnId=vpcPeeringConn.get('VpcPeeringConnectionId')
-            status=vpcPeeringConn.get('Status').get("Code")
             
-            if status=="active":
+            if vpcPeeringConn.get('Status').get("Code")=="active":
                 for route_table in vpc.route_tables.all():
                     for asso_att in route_table.associations_attribute:
-                        if asso_att.get('Main'):
+                        if not asso_att.get('Main'):
                             if vpc.cidr_block==cidr_accepter:
                                 route_table.create_route(
                                     DestinationCidrBlock=cidr_requester,

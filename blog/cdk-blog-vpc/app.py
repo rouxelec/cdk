@@ -4,16 +4,17 @@ import time
 from aws_cdk import core
 import random
 import aws_cdk.aws_ec2 as ec2
+import os
 
 from cdk_blog_vpc.cdk_blog_vpc_stack import CdkBlogVpcStack
-from cdk_blog_vpc.cdk_blog_vpc_stack import CdkBlogVpcRouteStack
 from cdk_blog_vpc.cdk_blog_vpc_stack import CdkBlogVpcPeeringStack
 from cdk_blog_vpc.cdk_blog_vpc_stack import CdkBlogMyCustomResourceStack
 from cdk_blog_vpc.cdk_blog_vpc_stack import EC2InstanceStack
 
 
-env_CA = core.Environment(region="ca-central-1")
-env_US = core.Environment(region="us-east-1")
+env_CA = core.Environment(account=os.environ['CDK_DEFAULT_ACCOUNT'],region="ca-central-1")
+env_US = core.Environment(account=os.environ['CDK_DEFAULT_ACCOUNT'],region="us-east-1")
+
 
 app = core.App()
 
@@ -35,11 +36,6 @@ my_ec2_staging.add_dependency(vpc_staging_stack);
 vpc_peer_stack1=CdkBlogVpcPeeringStack(app, id="cdk-blog-vpc-peer1", vpc_id1=vpc_dev1_stack.vpc_id, vpc_id2=vpc_staging_stack.vpc_id, env=env_CA)
 vpc_peer_stack2=CdkBlogVpcPeeringStack(app, id="cdk-blog-vpc-peer2", vpc_id1=vpc_dev2_stack.vpc_id, vpc_id2=vpc_staging_stack.vpc_id, env=env_CA)
 
-# staging vpc required
-
-
-#vpc_route_stack1=CdkBlogVpcRouteStack(app,id='route-stack1', vpc_peer_ref=vpc_peer_stack1.vpc_peer_ref ,vpc=vpc_dev1_stack.vpc,peer_vpc=vpc_staging_stack.vpc, env=env_CA)
-#vpc_route_stack2=CdkBlogVpcRouteStack(app,id='route-stack2', vpc_peer_ref=vpc_peer_stack2.vpc_peer_ref ,vpc=vpc_dev2_stack.vpc,peer_vpc=vpc_staging_stack.vpc, env=env_CA)
 
 my_custom_resource=CdkBlogMyCustomResourceStack(app, "cdk-blog-custom-resource2", env=env_CA)
 
