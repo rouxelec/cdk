@@ -102,10 +102,15 @@ class CdkBlogVpcStack(core.Stack):
             cidr=self.next_cidr_range,
             max_azs=3,
 
-            subnet_configuration=[ec2.SubnetConfiguration(
+            subnet_configuration=[
+                ec2.SubnetConfiguration(
                 subnet_type=ec2.SubnetType.PUBLIC,
                 name="Ingress",
                 cidr_mask=24
+            #), ec2.SubnetConfiguration(
+             #  cidr_mask=24,
+             #  name="Application",
+             # subnet_type=ec2.SubnetType.PRIVATE
             )
             ]
         )
