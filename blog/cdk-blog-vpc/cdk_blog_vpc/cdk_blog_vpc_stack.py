@@ -123,7 +123,7 @@ class CdkBlogMyCustomResourceStack(core.Stack):
 
         resource = CdkBlogMyCustomResource(
             self, "cdk-blog-resource",
-            message="CustomResource says hello",
+            message="CustomResource is done",
         )
 
         # Publish the custom resource output
@@ -141,7 +141,6 @@ class CdkBlogMyCustomResource(core.Construct):
         print('reading code source...')
         with open("./cdk_blog_vpc/lambda/lambda_function.py", encoding="utf-8") as fp:
             code_body = fp.read()
-        print('code source ok...')
 
         my_lambda_role = iam.Role(self, "Role_lambda",assumed_by=iam.ServicePrincipal("lambda.amazonaws.com"))
         
