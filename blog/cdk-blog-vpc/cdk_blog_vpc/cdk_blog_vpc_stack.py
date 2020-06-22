@@ -157,8 +157,8 @@ class CdkBlogMyCustomResource(core.Construct):
                 aws_lambda.SingletonFunction(
                     self, "Singleton",
                     uuid=str(_uuid),
-                    code=aws_lambda.InlineCode(code_body),
-                    handler="index.lambda_handler",
+                    code=aws_lambda.Code.from_asset("./cdk_blog_vpc/lambda"),
+                    handler="lambda_function.lambda_handler",
                     timeout=core.Duration.seconds(300),
                     runtime=aws_lambda.Runtime.PYTHON_3_7,
                     role=my_lambda_role

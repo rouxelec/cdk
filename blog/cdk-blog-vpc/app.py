@@ -37,7 +37,7 @@ vpc_peer_stack1=CdkBlogVpcPeeringStack(app, id="cdk-blog-vpc-peer1", vpc_id1=vpc
 vpc_peer_stack2=CdkBlogVpcPeeringStack(app, id="cdk-blog-vpc-peer2", vpc_id1=vpc_dev2_stack.vpc_id, vpc_id2=vpc_staging_stack.vpc_id, env=env_CA)
 
 
-my_custom_resource=CdkBlogMyCustomResourceStack(app, "cdk-blog-custom-resource2", env=env_CA)
+my_custom_resource=CdkBlogMyCustomResourceStack(app, "cdk-blog-custom-resource", env=env_CA)
 
 my_custom_resource.add_dependency(vpc_peer_stack2);
 my_custom_resource.add_dependency(vpc_peer_stack1);

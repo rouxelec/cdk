@@ -2,53 +2,16 @@ import boto3
 import time
 import json
 import logging as log
-#import cfnresponse
-
-from botocore.vendored import requests
-
-SUCCESS = "SUCCESS"
-FAILED = "FAILED"
+import cfnresponse
 
 log.getLogger().setLevel(log.INFO)
 
-physical_id = 'TheOnlyCustomResource2'
+physical_id = 'TheOnlyCustomResource'
 
 ec2 = boto3.resource('ec2', region_name='ca-central-1')
 client = boto3.client('ec2', region_name='ca-central-1')
 dynamodb = boto3.resource('dynamodb', region_name='ca-central-1')
 cidr_range_table = dynamodb.Table('cidr_range_table')
-
-def send(event, context, responseStatus, responseData, physicalResourceId=None, noEcho=False):
-    responseUrl = event['ResponseURL']
- 
-    print(responseUrl)
- 
-    responseBody = {}
-    responseBody['Status'] = responseStatus
-    responseBody['Reason'] = 'See the details in CloudWatch Log Stream: ' + context.log_stream_name
-    responseBody['PhysicalResourceId'] = physicalResourceId or context.log_stream_name
-    responseBody['StackId'] = event['StackId']
-    responseBody['RequestId'] = event['RequestId']
-    responseBody['LogicalResourceId'] = event['LogicalResourceId']
-    responseBody['NoEcho'] = noEcho
-    responseBody['Data'] = responseData
- 
-    json_responseBody = json.dumps(responseBody)
- 
-    print("Response body:\n" + json_responseBody)
- 
-    headers = {
-        'content-type' : '',
-        'content-length' : str(len(json_responseBody))
-    }
- 
-    try:
-        response = requests.put(responseUrl,
-                                data=json_responseBody,
-                                headers=headers)
-        print("Status code: " + response.reason)
-    except Exception as e:
-        print("send(..) failed executing requests.put(..): " + str(e))
 
 def lambda_handler(event, context):
     try:
@@ -63,15 +26,14 @@ def lambda_handler(event, context):
         if event['RequestType'] == 'Create':
             update_dynamo()
             
-        send(event, context, SUCCESS,
+        cfnresponse.send(event, context, cfnresponse.SUCCESS,
                          attributes, physical_id)
     except Exception as e:
         log.exception(e)
-        send(event, context, FAILED, {}, physical_id)
+        cfnresponse.send(event, context, cfnresponse.FAILED, {}, physical_id)
 
 def update_dynamo():
-    vpcs_and_ec2ips={}
-    filters = [{"Name":"tag-value","Values":["*vpc-dev*","*vpc-staging*"]}]
+    filters = []
     vpcs = list(ec2.vpcs.filter(Filters=filters))
     for vpc in vpcs:
         response = client.describe_vpcs(
@@ -96,20 +58,14 @@ def update_dynamo():
         for instance in vpc.instances.all():
             priv_ip_add=instance.private_ip_address
     
-        vpc_name=''
-        vpc_resp=response['Vpcs'][0]
-        vpc_id=vpc_resp['VpcId']
-        vpc_and_ec2ip=[]
+        vpc_ip={}
+        vpc_name='test'
         vpc_resp=response['Vpcs'][0]
         if not vpc_resp.get('Tags') is None:
             for tag in vpc_resp.get('Tags'):
                 if tag['Key']=='Name':  
                     vpc_name=tag['Value']
-                    if "vpc-dev" in vpc_name:
-                        vpc_and_ec2ip.append(vpc_id)
-                        vpc_and_ec2ip.append(vpc_name)
-                        vpc_and_ec2ip.append(priv_ip_add)
-                        vpcs_and_ec2ips[vpc_id]=vpc_and_ec2ip
+                    vpc_ip[vpc_name]=priv_ip_add
                     cidr_range_table.put_item(
                     Item={
                         'id': vpc_name,
@@ -122,9 +78,9 @@ def update_dynamo():
         response = client.describe_vpc_peering_connections(
             Filters=[]
         )
-        
-        
-        vpc_peering_ids={}    
+            
+        # creating specific route to show no transitivity
+            
         vpcPeeringCs=response['VpcPeeringConnections']
         for vpcPeeringConn in vpcPeeringCs:
             cidr_accepter=vpcPeeringConn.get('AccepterVpcInfo').get('CidrBlock')
@@ -135,7 +91,6 @@ def update_dynamo():
                 for route_table in vpc.route_tables.all():
                     for asso_att in route_table.associations_attribute:
                         if not asso_att.get('Main'):
-                            vpc_peering_ids[vpc_name]=vpcPConnId
                             if vpc.cidr_block==cidr_accepter:
                                 route_table.create_route(
                                     DestinationCidrBlock=cidr_requester,
@@ -146,32 +101,4 @@ def update_dynamo():
                                     DestinationCidrBlock=cidr_accepter,
                                     VpcPeeringConnectionId=vpcPConnId
                                 )    
-                ################ WARNING #########################
-                # creating specific route to show no transitivity
-                # not required            
-                if "vpc-dev" in vpc_name and vpc.cidr_block==cidr_requester:
-                    vpcs_and_ec2ips[vpc_id].append(vpcPConnId)
-                    print("vpcs_and_ec2ips[vpc_id].append(vpcPConnId)")
-                    print(vpcs_and_ec2ips[vpc_id])
-                ###################################################
-                    
-    ################ WARNING #########################    
-    # creating specific route to show no transitivity
-    # not required
-    filters = [{"Name":"tag-value","Values":["*dev*"]}]
-    vpcs = list(ec2.vpcs.filter(Filters=filters))
-    for vpc in vpcs:
-        for vpic_id,vpc_and_ec2ip in vpcs_and_ec2ips.items():
-            vpc_name=vpc_and_ec2ip[1]
-            ec2_ip=vpc_and_ec2ip[2]
-            vpc_peering_id=vpc_and_ec2ip[3]
-            if not vpc.id==vpc_and_ec2ip[0] and 'dev' in vpc_name:
-                for route_table in vpc.route_tables.all():
-                    for asso_att in route_table.associations_attribute:
-                        if not asso_att.get('Main'):
-                            route_table.create_route(
-                                DestinationCidrBlock=ec2_ip+"/32",
-                                VpcPeeringConnectionId=vpc_peering_id
-                            )
-
-    ###################################################
+       

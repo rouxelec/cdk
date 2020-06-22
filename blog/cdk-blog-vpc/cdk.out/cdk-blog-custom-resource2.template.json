@@ -66,11 +66,11 @@
       "Properties": {
         "ServiceToken": {
           "Fn::GetAtt": [
-            "SingletonLambda435b6ee0ae4511eab761129b54026e4d567D90C4",
+            "SingletonLambda182da69cb3e111ea983d129b54026e4d86A06754",
             "Arn"
           ]
         },
-        "Message": "CustomResource says hello"
+        "Message": "CustomResource is done"
       },
       "UpdateReplacePolicy": "Delete",
       "DeletionPolicy": "Delete",
@@ -78,13 +78,48 @@
         "aws:cdk:path": "cdk-blog-custom-resource2/cdk-blog-resource/Resource/Default"
       }
     },
-    "SingletonLambda435b6ee0ae4511eab761129b54026e4d567D90C4": {
+    "SingletonLambda182da69cb3e111ea983d129b54026e4d86A06754": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
-          "ZipFile": "import boto3\nimport time\nimport json\nimport logging as log\nimport cfnresponse\n\nlog.getLogger().setLevel(log.INFO)\n\nphysical_id = 'TheOnlyCustomResource'\n\nec2 = boto3.resource('ec2', region_name='ca-central-1')\nclient = boto3.client('ec2', region_name='ca-central-1')\ndynamodb = boto3.resource('dynamodb', region_name='ca-central-1')\ncidr_range_table = dynamodb.Table('cidr_range_table')\n\ndef lambda_handler(event, context):\n    try:\n        log.info('Input event: %s', event)\n        if event['RequestType'] == 'Create' and event['ResourceProperties'].get('FailCreate', False):\n            raise RuntimeError('Create failure requested')\n\n        message = event['ResourceProperties']['Message']\n        attributes = {\n            'Response': 'You said \"%s\"' % message\n        }\n        if event['RequestType'] == 'Create':\n            update_dynamo()\n            \n        cfnresponse.send(event, context, cfnresponse.SUCCESS,\n                         attributes, physical_id)\n    except Exception as e:\n        log.exception(e)\n        cfnresponse.send(event, context, cfnresponse.FAILED, {}, physical_id)\n\ndef update_dynamo():\n    filters = []\n    vpcs = list(ec2.vpcs.filter(Filters=filters))\n    for vpc in vpcs:\n        response = client.describe_vpcs(\n        VpcIds=[vpc.id]\n        )\n        \n        for subnet in vpc.subnets.all():\n            subnet_name=''\n            if not subnet.tags==None:\n                for tag in subnet.tags:\n                    if tag['Key']==\"Name\":\n                        subnet_name=tag['Value']\n                        cidr_range_table.put_item(\n                            Item={\n                                'id': subnet_name,\n                                'cidr_range': subnet.cidr_block,\n                                'vpc_id' : subnet.vpc_id,\n                                'component_type' : \"Subnet\",\n                                'subnet_id': subnet.subnet_id\n                        })          \n        priv_ip_add='unknown'\n        for instance in vpc.instances.all():\n            priv_ip_add=instance.private_ip_address\n    \n        vpc_name='test'\n        vpc_resp=response['Vpcs'][0]\n        if not vpc_resp.get('Tags') is None:\n            for tag in vpc_resp.get('Tags'):\n                if tag['Key']=='Name':  \n                    vpc_name=tag['Value']\n                    cidr_range_table.put_item(\n                    Item={\n                        'id': vpc_name,\n                        'cidr_range': vpc_resp['CidrBlock'],\n                        'vpc_id' : vpc_resp['VpcId'],\n                        'component_type' : \"VPC\",\n                        'ec2_ip_address' : priv_ip_add\n                        }\n                    )\n        response = client.describe_vpc_peering_connections(\n            Filters=[]\n        )\n            \n        vpcPeeringCs=response['VpcPeeringConnections']\n        for vpcPeeringConn in vpcPeeringCs:\n            cidr_accepter=vpcPeeringConn.get('AccepterVpcInfo').get('CidrBlock')\n            cidr_requester=vpcPeeringConn.get('RequesterVpcInfo').get('CidrBlock')\n            vpcPConnId=vpcPeeringConn.get('VpcPeeringConnectionId')\n            \n            if vpcPeeringConn.get('Status').get(\"Code\")==\"active\":\n                for route_table in vpc.route_tables.all():\n                    for asso_att in route_table.associations_attribute:\n                        if not asso_att.get('Main'):\n                            if vpc.cidr_block==cidr_accepter:\n                                route_table.create_route(\n                                    DestinationCidrBlock=cidr_requester,\n                                    VpcPeeringConnectionId=vpcPConnId\n                                )\n                            if vpc.cidr_block==cidr_requester:\n                                route_table.create_route(\n                                    DestinationCidrBlock=cidr_accepter,\n                                    VpcPeeringConnectionId=vpcPConnId\n                                )    \n       "
+          "S3Bucket": {
+            "Ref": "AssetParameters71b4d3e4aac1e63b8cdcf75fa356bed780c976b09a2f98c8be549f7cdfe11355S3BucketABB36086"
+          },
+          "S3Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    0,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParameters71b4d3e4aac1e63b8cdcf75fa356bed780c976b09a2f98c8be549f7cdfe11355S3VersionKey2E86FB83"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    1,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParameters71b4d3e4aac1e63b8cdcf75fa356bed780c976b09a2f98c8be549f7cdfe11355S3VersionKey2E86FB83"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
         },
-        "Handler": "index.lambda_handler",
+        "Handler": "lambda_function.lambda_handler",
         "Role": {
           "Fn::GetAtt": [
             "cdkblogresourceRolelambda80C32557",
@@ -99,8 +134,24 @@
         "cdkblogresourceRolelambda80C32557"
       ],
       "Metadata": {
-        "aws:cdk:path": "cdk-blog-custom-resource2/SingletonLambda435b6ee0ae4511eab761129b54026e4d/Resource"
+        "aws:cdk:path": "cdk-blog-custom-resource2/SingletonLambda182da69cb3e111ea983d129b54026e4d/Resource",
+        "aws:asset:path": "asset.71b4d3e4aac1e63b8cdcf75fa356bed780c976b09a2f98c8be549f7cdfe11355",
+        "aws:asset:property": "Code"
       }
+    }
+  },
+  "Parameters": {
+    "AssetParameters71b4d3e4aac1e63b8cdcf75fa356bed780c976b09a2f98c8be549f7cdfe11355S3BucketABB36086": {
+      "Type": "String",
+      "Description": "S3 bucket for asset \"71b4d3e4aac1e63b8cdcf75fa356bed780c976b09a2f98c8be549f7cdfe11355\""
+    },
+    "AssetParameters71b4d3e4aac1e63b8cdcf75fa356bed780c976b09a2f98c8be549f7cdfe11355S3VersionKey2E86FB83": {
+      "Type": "String",
+      "Description": "S3 key for asset version \"71b4d3e4aac1e63b8cdcf75fa356bed780c976b09a2f98c8be549f7cdfe11355\""
+    },
+    "AssetParameters71b4d3e4aac1e63b8cdcf75fa356bed780c976b09a2f98c8be549f7cdfe11355ArtifactHash37BE45CB": {
+      "Type": "String",
+      "Description": "Artifact hash for asset \"71b4d3e4aac1e63b8cdcf75fa356bed780c976b09a2f98c8be549f7cdfe11355\""
     }
   },
   "Outputs": {

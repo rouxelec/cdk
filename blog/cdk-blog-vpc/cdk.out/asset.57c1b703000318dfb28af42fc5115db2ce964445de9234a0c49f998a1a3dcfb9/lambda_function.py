@@ -97,6 +97,7 @@ def update_dynamo():
             priv_ip_add=instance.private_ip_address
     
         vpc_name=''
+        vpc_id=''
         vpc_resp=response['Vpcs'][0]
         vpc_id=vpc_resp['VpcId']
         vpc_and_ec2ip=[]
@@ -105,11 +106,10 @@ def update_dynamo():
             for tag in vpc_resp.get('Tags'):
                 if tag['Key']=='Name':  
                     vpc_name=tag['Value']
-                    if "vpc-dev" in vpc_name:
-                        vpc_and_ec2ip.append(vpc_id)
-                        vpc_and_ec2ip.append(vpc_name)
-                        vpc_and_ec2ip.append(priv_ip_add)
-                        vpcs_and_ec2ips[vpc_id]=vpc_and_ec2ip
+                    vpc_and_ec2ip.append(vpc_id)
+                    vpc_and_ec2ip.append(vpc_name)
+                    vpc_and_ec2ip.append(priv_ip_add)
+                    vpcs_and_ec2ips[vpc_id]=vpc_and_ec2ip
                     cidr_range_table.put_item(
                     Item={
                         'id': vpc_name,
@@ -146,15 +146,9 @@ def update_dynamo():
                                     DestinationCidrBlock=cidr_accepter,
                                     VpcPeeringConnectionId=vpcPConnId
                                 )    
-                ################ WARNING #########################
-                # creating specific route to show no transitivity
-                # not required            
-                if "vpc-dev" in vpc_name and vpc.cidr_block==cidr_requester:
-                    vpcs_and_ec2ips[vpc_id].append(vpcPConnId)
-                    print("vpcs_and_ec2ips[vpc_id].append(vpcPConnId)")
-                    print(vpcs_and_ec2ips[vpc_id])
-                ###################################################
-                    
+                                vpcs_and_ec2ips[vpc_id].append(vpcPConnId)
+                                
+                                
     ################ WARNING #########################    
     # creating specific route to show no transitivity
     # not required
