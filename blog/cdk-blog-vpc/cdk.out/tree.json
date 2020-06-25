@@ -1823,33 +1823,33 @@
               }
             }
           },
-          "SingletonLambda5af208aab40f11eaa193129b54026e4d": {
-            "id": "SingletonLambda5af208aab40f11eaa193129b54026e4d",
-            "path": "cdk-blog-custom-resource/SingletonLambda5af208aab40f11eaa193129b54026e4d",
+          "SingletonLambdadde8099cb65f11eaac40129b54026e4d": {
+            "id": "SingletonLambdadde8099cb65f11eaac40129b54026e4d",
+            "path": "cdk-blog-custom-resource/SingletonLambdadde8099cb65f11eaac40129b54026e4d",
             "children": {
               "Code": {
                 "id": "Code",
-                "path": "cdk-blog-custom-resource/SingletonLambda5af208aab40f11eaa193129b54026e4d/Code",
+                "path": "cdk-blog-custom-resource/SingletonLambdadde8099cb65f11eaac40129b54026e4d/Code",
                 "children": {
                   "Stage": {
                     "id": "Stage",
-                    "path": "cdk-blog-custom-resource/SingletonLambda5af208aab40f11eaa193129b54026e4d/Code/Stage"
+                    "path": "cdk-blog-custom-resource/SingletonLambdadde8099cb65f11eaac40129b54026e4d/Code/Stage"
                   },
                   "AssetBucket": {
                     "id": "AssetBucket",
-                    "path": "cdk-blog-custom-resource/SingletonLambda5af208aab40f11eaa193129b54026e4d/Code/AssetBucket"
+                    "path": "cdk-blog-custom-resource/SingletonLambdadde8099cb65f11eaac40129b54026e4d/Code/AssetBucket"
                   }
                 }
               },
               "Resource": {
                 "id": "Resource",
-                "path": "cdk-blog-custom-resource/SingletonLambda5af208aab40f11eaa193129b54026e4d/Resource",
+                "path": "cdk-blog-custom-resource/SingletonLambdadde8099cb65f11eaac40129b54026e4d/Resource",
                 "attributes": {
                   "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
                   "aws:cdk:cloudformation:props": {
                     "code": {
                       "s3Bucket": {
-                        "Ref": "AssetParameters275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2S3BucketD798CC8A"
+                        "Ref": "AssetParameters1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987S3BucketBF89EBA9"
                       },
                       "s3Key": {
                         "Fn::Join": [
@@ -1862,7 +1862,7 @@
                                   "Fn::Split": [
                                     "||",
                                     {
-                                      "Ref": "AssetParameters275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2S3VersionKey6F6F47CA"
+                                      "Ref": "AssetParameters1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987S3VersionKey48C496D9"
                                     }
                                   ]
                                 }
@@ -1875,7 +1875,7 @@
                                   "Fn::Split": [
                                     "||",
                                     {
-                                      "Ref": "AssetParameters275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2S3VersionKey6F6F47CA"
+                                      "Ref": "AssetParameters1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987S3VersionKey48C496D9"
                                     }
                                   ]
                                 }
@@ -1903,21 +1903,21 @@
             "id": "AssetParameters",
             "path": "cdk-blog-custom-resource/AssetParameters",
             "children": {
-              "275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2": {
-                "id": "275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2",
-                "path": "cdk-blog-custom-resource/AssetParameters/275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2",
+              "1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987": {
+                "id": "1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987",
+                "path": "cdk-blog-custom-resource/AssetParameters/1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987",
                 "children": {
                   "S3Bucket": {
                     "id": "S3Bucket",
-                    "path": "cdk-blog-custom-resource/AssetParameters/275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2/S3Bucket"
+                    "path": "cdk-blog-custom-resource/AssetParameters/1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987/S3Bucket"
                   },
                   "S3VersionKey": {
                     "id": "S3VersionKey",
-                    "path": "cdk-blog-custom-resource/AssetParameters/275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2/S3VersionKey"
+                    "path": "cdk-blog-custom-resource/AssetParameters/1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987/S3VersionKey"
                   },
                   "ArtifactHash": {
                     "id": "ArtifactHash",
-                    "path": "cdk-blog-custom-resource/AssetParameters/275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2/ArtifactHash"
+                    "path": "cdk-blog-custom-resource/AssetParameters/1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987/ArtifactHash"
                   }
                 }
               }

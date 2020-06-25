@@ -66,7 +66,7 @@
       "Properties": {
         "ServiceToken": {
           "Fn::GetAtt": [
-            "SingletonLambda5af208aab40f11eaa193129b54026e4d85658744",
+            "SingletonLambdadde8099cb65f11eaac40129b54026e4d42F071E4",
             "Arn"
           ]
         },
@@ -78,12 +78,12 @@
         "aws:cdk:path": "cdk-blog-custom-resource/cdk-blog-resource/Resource/Default"
       }
     },
-    "SingletonLambda5af208aab40f11eaa193129b54026e4d85658744": {
+    "SingletonLambdadde8099cb65f11eaac40129b54026e4d42F071E4": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
-            "Ref": "AssetParameters275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2S3BucketD798CC8A"
+            "Ref": "AssetParameters1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987S3BucketBF89EBA9"
           },
           "S3Key": {
             "Fn::Join": [
@@ -96,7 +96,7 @@
                       "Fn::Split": [
                         "||",
                         {
-                          "Ref": "AssetParameters275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2S3VersionKey6F6F47CA"
+                          "Ref": "AssetParameters1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987S3VersionKey48C496D9"
                         }
                       ]
                     }
@@ -109,7 +109,7 @@
                       "Fn::Split": [
                         "||",
                         {
-                          "Ref": "AssetParameters275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2S3VersionKey6F6F47CA"
+                          "Ref": "AssetParameters1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987S3VersionKey48C496D9"
                         }
                       ]
                     }
@@ -134,24 +134,24 @@
         "cdkblogresourceRolelambda80C32557"
       ],
       "Metadata": {
-        "aws:cdk:path": "cdk-blog-custom-resource/SingletonLambda5af208aab40f11eaa193129b54026e4d/Resource",
-        "aws:asset:path": "asset.275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2",
+        "aws:cdk:path": "cdk-blog-custom-resource/SingletonLambdadde8099cb65f11eaac40129b54026e4d/Resource",
+        "aws:asset:path": "asset.1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987",
         "aws:asset:property": "Code"
       }
     }
   },
   "Parameters": {
-    "AssetParameters275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2S3BucketD798CC8A": {
+    "AssetParameters1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987S3BucketBF89EBA9": {
       "Type": "String",
-      "Description": "S3 bucket for asset \"275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2\""
+      "Description": "S3 bucket for asset \"1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987\""
     },
-    "AssetParameters275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2S3VersionKey6F6F47CA": {
+    "AssetParameters1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987S3VersionKey48C496D9": {
       "Type": "String",
-      "Description": "S3 key for asset version \"275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2\""
+      "Description": "S3 key for asset version \"1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987\""
     },
-    "AssetParameters275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2ArtifactHashD9E14CCB": {
+    "AssetParameters1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987ArtifactHashF7C17C9C": {
       "Type": "String",
-      "Description": "Artifact hash for asset \"275f6fd8e67195bd83b9bdde16a0f42127439dbe4e935a673eba404b5a66c6b2\""
+      "Description": "Artifact hash for asset \"1113f0ed7775f9c02fd4993e47cb76fca4223a4c0aca7cd3afb055c650ba7987\""
     }
   },
   "Outputs": {

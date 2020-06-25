@@ -159,10 +159,10 @@ def update_dynamo():
     filters = [{"Name":"tag-value","Values":["*dev*"]}]
     vpcs = list(ec2.vpcs.filter(Filters=filters))
     for vpc in vpcs:
-        for vpc_id,vpc_and_ec2ip in vpcs_and_ec2ips.items():
+        for vpic_id,vpc_and_ec2ip in vpcs_and_ec2ips.items():
             ec2_ip=vpc_and_ec2ip[1]
             if not vpc.id==vpc_and_ec2ip[0]:
-                vpc_peering_id=vpc_peering_connections[vpc.id]
+                vpc_peering_id=vpc_peering_connections[vpic_id]
                 for route_table in vpc.route_tables.all():
                     for asso_att in route_table.associations_attribute:
                         if not asso_att.get('Main'):
